@@ -26,7 +26,7 @@ function Home() {
       category: "Main Course",
       price: "$12.99",
       status: "Available",
-      description: "Juicy beef patty with lettuce, tomato, and cheese"
+      description: "Juicy beef patty with lettuce, tomato, and cheese",
     },
     {
       id: 2,
@@ -34,7 +34,7 @@ function Home() {
       category: "Appetizer",
       price: "$8.99",
       status: "Available",
-      description: "Fresh romaine lettuce with parmesan and croutons"
+      description: "Fresh romaine lettuce with parmesan and croutons",
     },
     {
       id: 3,
@@ -42,7 +42,7 @@ function Home() {
       category: "Beverage",
       price: "$4.50",
       status: "Available",
-      description: "Rich espresso with steamed milk foam"
+      description: "Rich espresso with steamed milk foam",
     },
     {
       id: 4,
@@ -50,7 +50,7 @@ function Home() {
       category: "Dessert",
       price: "$6.99",
       status: "Limited",
-      description: "Decadent chocolate cake with vanilla frosting"
+      description: "Decadent chocolate cake with vanilla frosting",
     },
     {
       id: 5,
@@ -58,45 +58,54 @@ function Home() {
       category: "Main Course",
       price: "$15.99",
       status: "Unavailable",
-      description: "Beer-battered fish with crispy fries"
-    }
+      description: "Beer-battered fish with crispy fries",
+    },
   ];
 
   return (
-    <div className="container mx-auto p-6 space-y-8">
+    <div className="container mx-auto p-8 space-y-10 font-cormorant">
       {/* Hero Section */}
-      <Card>
-        <CardHeader className="text-center">
-          <CardTitle className="text-4xl font-bold">Welcome to Figgz Cafe</CardTitle>
-          <CardDescription className="text-lg">
+      <Card className="shadow-lg">
+        <CardHeader className="text-center space-y-4">
+          <CardTitle className="text-5xl font-bold">
+            Welcome to Figgz Cafe
+          </CardTitle>
+          <CardDescription className="text-xl text-muted-foreground">
             Discover our delicious menu items and their availability
           </CardDescription>
         </CardHeader>
         <CardContent className="text-center">
-          <Button size="lg">View Full Menu</Button>
+          <Button
+            size="lg"
+            className="bg-primary text-white hover:bg-primary-foreground"
+          >
+            View Full Menu
+          </Button>
         </CardContent>
       </Card>
 
       {/* Menu Table */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl">Popular Menu Items</CardTitle>
-          <CardDescription>
+      <Card className="shadow-lg">
+        <CardHeader className="space-y-2">
+          <CardTitle className="text-3xl font-semibold">
+            Popular Menu Items
+          </CardTitle>
+          <CardDescription className="text-lg text-muted-foreground">
             Check out our most popular dishes and their current availability
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableCaption>
+          <Table className="border rounded-lg">
+            <TableCaption className="text-muted-foreground">
               A list of our popular menu items and their current availability.
             </TableCaption>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[100px]">Item ID</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Category</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Price</TableHead>
+                <TableHead className="w-[100px] text-left">Item ID</TableHead>
+                <TableHead className="text-left">Name</TableHead>
+                <TableHead className="text-left">Category</TableHead>
+                <TableHead className="text-left">Description</TableHead>
+                <TableHead className="text-left">Price</TableHead>
                 <TableHead className="text-right">Status</TableHead>
               </TableRow>
             </TableHeader>
@@ -111,12 +120,12 @@ function Home() {
                   </TableCell>
                   <TableCell className="font-medium">{item.price}</TableCell>
                   <TableCell className="text-right">
-                    <Badge 
+                    <Badge
                       variant={
-                        item.status === "Available" 
-                          ? "default" 
-                          : item.status === "Limited" 
-                          ? "secondary" 
+                        item.status === "Available"
+                          ? "default"
+                          : item.status === "Limited"
+                          ? "secondary"
                           : "destructive"
                       }
                     >
