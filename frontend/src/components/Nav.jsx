@@ -46,6 +46,7 @@ function Navigation() {
     }
   }, [])
 
+
   // Floating Arrow Button to go back to 1st section (shows only when nav bar is hidden)
   const FloatingArrowButton = () => (
     <AnimatePresence>
@@ -77,7 +78,6 @@ function Navigation() {
       )}
     </AnimatePresence>
   )
-
   return (
     <>
       {/* Main Navigation Bar - Auto Hide/Show */}
@@ -158,8 +158,116 @@ function Navigation() {
         )}
       </AnimatePresence>
 
-      {/* Floating Arrow Button - Only shows when nav is hidden */}
-      <FloatingArrowButton />
+        {/* Floating Arrow Button - Only shows when nav is hidden */}
+      <AnimatePresence>
+        {!isVisible && (
+          <motion.div 
+            className="fixed bottom-8 right-8 z-[60]"
+            initial={{ scale: 0, rotate: 180 }}
+            animate={{ scale: 1, rotate: 0 }}
+            exit={{ scale: 0, rotate: 180 }}
+            transition={{ 
+              type: "spring", 
+              stiffness: 260, 
+              damping: 20 
+            }}
+          >
+            <motion.button
+              onClick={() => {
+                const heroSection = document.querySelector('#home')
+                if (heroSection) {
+                  heroSection.scrollIntoView({ 
+                    behavior: 'smooth' 
+                  })
+                } else {
+                  window.scrollTo({ 
+                    top: 0, 
+                    behavior: 'smooth' 
+                  })
+                }
+              }}
+              className="relative group"
+              whileHover={{ 
+                scale: 1.1,
+                rotate: 5
+              }}
+              whileTap={{ scale: 0.9 }}
+            >
+              {/* Main button */}
+              <div className="w-12 h-12 bg-gradient-to-br from-figgz-primary to-orange-600 text-white rounded-full shadow-2xl flex items-center justify-center relative overflow-hidden">
+                {/* Animated background */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"
+                  animate={{
+                    rotate: [0, 360]
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                />
+                
+                {/* Arrow Icon */}
+                <motion.svg 
+                  className="w-6 h-6 relative z-10" 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
+                  animate={{
+                    y: [-2, 2, -2]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 15l7-7 7 7" />
+                </motion.svg>
+              </div>
+              
+              {/* Pulse rings */}
+              <motion.div
+                className="absolute inset-0 rounded-full border-2 border-figgz-primary"
+                animate={{
+                  scale: [1, 1.5, 2],
+                  opacity: [0.8, 0.3, 0]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeOut"
+                }}
+              />
+              <motion.div
+                className="absolute inset-0 rounded-full border-2 border-figgz-primary"
+                animate={{
+                  scale: [1, 1.3, 1.8],
+                  opacity: [0.6, 0.2, 0]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeOut",
+                  delay: 0.5
+                }}
+              />
+              
+              {/* Tooltip */}
+              <motion.div
+                className="absolute bottom-full right-0 mb-2 px-3 py-1 bg-black/80 text-white text-sm rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none"
+                initial={{ opacity: 0, y: 10 }}
+                whileHover={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                Back to Top
+                <div className="absolute top-full right-4 w-2 h-2 bg-black/80 transform rotate-45 -mt-1" />
+              </motion.div>
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   )
 }

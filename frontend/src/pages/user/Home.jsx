@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Navigation from '../../components/Nav'
+import Footer from '../../components/Footer'
+import { BackgroundBeamsWithCollision } from '../../components/ui/aceternity/background-beams-with-collision'
 
 function Home() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const heroImages = [
-    '/src/assets/demo01.jpeg',
-    '/src/assets/demo02.jpeg',
-    '/src/assets/demo03.jpeg'
+    '/src/assets/demo07.jpg',
+    '/src/assets/demo08.jpg',
+    '/src/assets/demo09.jpg'
   ]
 
   // Auto-change hero images
@@ -122,7 +124,7 @@ function Home() {
                   <motion.button
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-figgz-secondary transition-all duration-300"
+                    className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-figgz-primary transition-all duration-300"
                   >
                     View Menu
                   </motion.button>
@@ -616,10 +618,24 @@ function Home() {
               viewport={{ once: true }}
               className="flex justify-end mb-4"
             >
-              <button className="flex items-center gap-2 text-figgz-primary font-semibold hover:underline transition-all duration-300">
-                <span className="w-2 h-2 bg-figgz-primary rounded-full"></span>
+              <motion.button 
+                whileHover={{ scale: 1.05, y: -1 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center gap-3 text-figgz-primary font-semibold px-4 py-2 rounded-lg hover:bg-figgz-primary/10 transition-all duration-300 text-lg cursor-pointer"
+              >
+                <span className="w-3 h-3 bg-figgz-primary rounded-full"></span>
                 View The Menu
-              </button>
+                <motion.svg 
+                  className="w-5 h-5" 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
+                  whileHover={{ x: 3 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </motion.svg>
+              </motion.button>
             </motion.div>
           </div>
 
@@ -869,7 +885,7 @@ function Home() {
       </section>
 
       {/* Customer Testimonials Section - Section 5 */}
-      <section id="testimonials" className="py-20 bg-gradient-to-br from-gray-100 to-white relative overflow-hidden">
+      <section id="testimonials" className="py-20 bg-gradient-to-br from-orange-50 via-amber-50/30 to-white relative overflow-hidden">
         {/* Background Decorative Elements */}
         <div className="absolute top-10 right-10 opacity-5">
           <motion.div
@@ -1268,6 +1284,352 @@ function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* Reservation Form Section */}
+      <section id="booking" className="py-20 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+        {/* Background Decorative Elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-20 left-10 w-32 h-32 bg-figgz-primary/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-40 h-40 bg-orange-300/5 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="inline-block mb-4"
+            >
+              <span className="bg-figgz-primary text-white px-6 py-2 rounded-full text-sm font-semibold uppercase tracking-wider">
+                Book a Table
+              </span>
+            </motion.div>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="text-4xl lg:text-6xl font-bold text-figgz-secondary mb-8"
+              style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            >
+              Make Reservation
+            </motion.h2>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="flex justify-center items-center gap-2 mb-12"
+            >
+              <div className="w-2 h-2 bg-figgz-primary rounded-full"></div>
+              <div className="w-8 h-0.5 bg-figgz-primary"></div>
+              <div className="w-2 h-2 bg-figgz-primary rounded-full"></div>
+              <div className="w-2 h-2 bg-figgz-primary rounded-full"></div>
+              <div className="w-2 h-2 bg-figgz-primary rounded-full"></div>
+            </motion.div>
+          </div>
+
+          {/* Reservation Form Container */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Form Section */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-3xl p-8 shadow-2xl border border-gray-100 relative overflow-hidden"
+            >
+              {/* Form Background Decoration */}
+              <div className="absolute inset-0 bg-gradient-to-br from-figgz-primary/3 to-transparent opacity-50"></div>
+              
+              <div className="relative z-10">
+                <form className="space-y-6">
+                  {/* First Row - Name and Persons */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-semibold text-figgz-secondary flex items-center gap-2">
+                        Name <span className="text-figgz-primary">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Your full name"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-figgz-primary/50 focus:border-figgz-primary transition-all duration-300 bg-gray-50/50"
+                        required
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="text-sm font-semibold text-figgz-secondary flex items-center gap-2">
+                        Persons <span className="text-figgz-primary">*</span>
+                      </label>
+                      <select
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-figgz-primary/50 focus:border-figgz-primary transition-all duration-300 bg-gray-50/50"
+                        required
+                      >
+                        <option value="">Select persons</option>
+                        <option value="1">1 Person</option>
+                        <option value="2">2 Persons</option>
+                        <option value="3">3 Persons</option>
+                        <option value="4">4 Persons</option>
+                        <option value="5">5 Persons</option>
+                        <option value="6">6 Persons</option>
+                        <option value="7">7 Persons</option>
+                        <option value="8">8+ Persons</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Second Row - Date and Time */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-semibold text-figgz-secondary flex items-center gap-2">
+                        Date <span className="text-figgz-primary">*</span>
+                      </label>
+                      <input
+                        type="date"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-figgz-primary/50 focus:border-figgz-primary transition-all duration-300 bg-gray-50/50"
+                        required
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="text-sm font-semibold text-figgz-secondary flex items-center gap-2">
+                        Time <span className="text-figgz-primary">*</span>
+                      </label>
+                      <select
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-figgz-primary/50 focus:border-figgz-primary transition-all duration-300 bg-gray-50/50"
+                        required
+                      >
+                        <option value="">Select time</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="11:30">11:30 AM</option>
+                        <option value="12:00">12:00 PM</option>
+                        <option value="12:30">12:30 PM</option>
+                        <option value="13:00">1:00 PM</option>
+                        <option value="13:30">1:30 PM</option>
+                        <option value="14:00">2:00 PM</option>
+                        <option value="14:30">2:30 PM</option>
+                        <option value="18:00">6:00 PM</option>
+                        <option value="18:30">6:30 PM</option>
+                        <option value="19:00">7:00 PM</option>
+                        <option value="19:30">7:30 PM</option>
+                        <option value="20:00">8:00 PM</option>
+                        <option value="20:30">8:30 PM</option>
+                        <option value="21:00">9:00 PM</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Third Row - Email and Phone */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-semibold text-figgz-secondary flex items-center gap-2">
+                        Email Address <span className="text-figgz-primary">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        placeholder="your.email@example.com"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-figgz-primary/50 focus:border-figgz-primary transition-all duration-300 bg-gray-50/50"
+                        required
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="text-sm font-semibold text-figgz-secondary flex items-center gap-2">
+                        Phone Number <span className="text-figgz-primary">*</span>
+                      </label>
+                      <input
+                        type="tel"
+                        placeholder="+1 (555) 123-4567"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-figgz-primary/50 focus:border-figgz-primary transition-all duration-300 bg-gray-50/50"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  {/* Fourth Row - Your Note */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold text-figgz-secondary flex items-center gap-2">
+                      Your Note <span className="text-figgz-primary">*</span>
+                    </label>
+                    <textarea
+                      placeholder="Special requests, dietary restrictions, or any other notes..."
+                      rows={4}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-figgz-primary/50 focus:border-figgz-primary transition-all duration-300 bg-gray-50/50 resize-none"
+                      required
+                    />
+                  </div>
+
+                  {/* Submit Button */}
+                  <motion.button
+                    type="submit"
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full bg-figgz-primary text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-xl hover:shadow-figgz-primary/25 transition-all duration-300 flex items-center justify-center gap-3"
+                  >
+                    Book Now
+                    <motion.svg 
+                      className="w-5 h-5"
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor"
+                      whileHover={{ x: 5 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </motion.svg>
+                  </motion.button>
+                </form>
+              </div>
+            </motion.div>
+
+            {/* Image Section */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="relative"
+            >
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+                <img 
+                  src="/src/assets/demo05.jpg" 
+                  alt="Restaurant Interior"
+                  className="w-full h-[600px] object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                
+                {/* Floating Card on Image */}
+                <div className="absolute bottom-8 left-8 right-8">
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                    viewport={{ once: true }}
+                    className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl"
+                  >
+                    <h3 className="text-xl font-bold text-figgz-secondary mb-2">
+                      Reserve Your Table
+                    </h3>
+                    <p className="text-figgz-paragraph mb-4">
+                      Experience fine dining in our elegant atmosphere. Book your table for an unforgettable culinary journey.
+                    </p>
+                    <div className="flex items-center gap-4 text-sm text-figgz-paragraph">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span>Available Today</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>Quick Confirmation</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Popular Healthy Food Section with Background Beams */}
+      <section className="relative">
+        <BackgroundBeamsWithCollision className="h-96 md:h-[40rem]">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 h-full flex items-center">
+            <div className="text-center w-full">
+              {/* Badge */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+                className="inline-block mb-4"
+              >
+                <span className="bg-white text-figgz-primary px-6 py-2 rounded-full text-sm font-bold uppercase tracking-wide shadow-xl border-2 border-figgz-primary/20">
+                  Fresh & Healthy
+                </span>
+              </motion.div>
+
+              {/* Compact Heading */}
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+                className="text-3xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 leading-tight"
+                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+              >
+                <span className="text-gray-700 dark:text-gray-200">Discover Our </span>
+                <span className="text-figgz-primary">Popular & Healthy </span>
+                <span className="text-gray-700 dark:text-gray-200">Menu Selection</span>
+              </motion.h2>
+
+              {/* Simple Decorative Line */}
+              <motion.div
+                initial={{ opacity: 0, scaleX: 0 }}
+                whileInView={{ opacity: 1, scaleX: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="flex justify-center items-center gap-2 mb-6"
+              >
+                <div className="w-8 h-px bg-gradient-to-r from-transparent via-figgz-primary to-transparent"></div>
+                <div className="w-1.5 h-1.5 bg-figgz-primary rounded-full"></div>
+                <div className="w-8 h-px bg-gradient-to-r from-transparent via-figgz-primary to-transparent"></div>
+              </motion.div>
+
+              {/* Compact Description */}
+              <motion.p
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                viewport={{ once: true }}
+                className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed"
+              >
+                Carefully curated nutritious meals, crafted with finest organic ingredients and superfoods for your wellness journey.
+              </motion.p>
+
+              {/* Compact CTA Button */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                <motion.button
+                  whileHover={{ 
+                    scale: 1.05,
+                    boxShadow: "0 12px 25px rgba(234, 88, 12, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-flex items-center gap-3 bg-figgz-primary hover:bg-figgz-primary/90 text-white px-8 py-3 rounded-full text-base font-semibold transition-all duration-300 shadow-lg hover:shadow-xl backdrop-blur-sm"
+                >
+                  Explore Healthy Menu
+                  <motion.svg 
+                    className="w-5 h-5"
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor"
+                    whileHover={{ x: 3 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </motion.svg>
+                </motion.button>
+              </motion.div>
+            </div>
+          </div>
+        </BackgroundBeamsWithCollision>
+      </section>
+
+      {/* Footer Section */}
+      <Footer />
     </div>
   )
 }
