@@ -44,6 +44,13 @@
 }
 
 :root {
+  /* Figgz Cafe Custom Color Palette */
+  --figgz-primary: #CB3A1A;
+  --figgz-secondary: #111111;
+  --figgz-paragraph: #74787C;
+  --figgz-white: #ffffff;
+  
+  /* ShadCN Variables */
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -118,6 +125,45 @@
   }
   body {
     @apply bg-background text-foreground;
-    
+    font-family: 'Outfit', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Garamond', serif;
+  }
+}
+
+/* Figgz Cafe Utility Classes */
+@layer utilities {
+  .text-figgz-primary {
+    color: var(--figgz-primary);
+  }
+  
+  .text-figgz-secondary {
+    color: var(--figgz-secondary);
+  }
+  
+  .text-figgz-paragraph {
+    color: var(--figgz-paragraph);
+  }
+  
+  .bg-figgz-primary {
+    background-color: var(--figgz-primary);
+  }
+  
+  .bg-figgz-secondary {
+    background-color: var(--figgz-secondary);
+  }
+  
+  .border-figgz-primary {
+    border-color: var(--figgz-primary);
+  }
+  
+  .hover\:bg-figgz-primary:hover {
+    background-color: var(--figgz-primary);
+  }
+  
+  .hover\:text-figgz-primary:hover {
+    color: var(--figgz-primary);
   }
 }
