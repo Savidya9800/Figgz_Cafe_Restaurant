@@ -50,26 +50,26 @@ function Home() {
         </div>
 
         {/* Decorative Elements */}
-        <div className="absolute top-20 left-10 opacity-20">
+        <div className="absolute top-20 left-4 sm:left-10 opacity-10 sm:opacity-20">
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="w-32 h-32 border border-figgz-primary rounded-full"
+            className="w-16 h-16 sm:w-32 sm:h-32 border border-figgz-primary rounded-full"
           />
         </div>
         
-        <div className="absolute bottom-20 right-10 opacity-20">
+        <div className="absolute bottom-20 right-4 sm:right-10 opacity-10 sm:opacity-20">
           <motion.div
             animate={{ rotate: -360 }}
             transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-            className="w-48 h-48 border border-white rounded-full"
+            className="w-24 h-24 sm:w-48 sm:h-48 border border-white rounded-full"
           />
         </div>
 
         {/* Hero Content */}
         <div className="relative z-10 h-full flex items-center">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
               {/* Left Content */}
               <div className="text-white">
                 <motion.div
@@ -87,7 +87,7 @@ function Home() {
                   initial={{ opacity: 0, x: -100 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 1, delay: 0.5 }}
-                  className="text-5xl lg:text-7xl font-bold mb-6 leading-tight"
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-6 leading-tight"
                   style={{ fontFamily: 'Cormorant Garamond, serif' }}
                 >
                   Exquisite Flavors
@@ -101,7 +101,7 @@ function Home() {
                   initial={{ opacity: 0, x: -100 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 1, delay: 0.7 }}
-                  className="text-xl text-gray-200 mb-8 leading-relaxed max-w-lg"
+                  className="text-base sm:text-lg md:text-xl text-gray-200 mb-8 leading-relaxed max-w-lg"
                 >
                   Discover a culinary journey where passion meets perfection. 
                   Every dish tells a story, every bite creates a memory.
@@ -116,7 +116,7 @@ function Home() {
                   <motion.button
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-figgz-primary text-white px-8 py-4 rounded-full font-semibold text-lg shadow-2xl hover:shadow-figgz-primary/25 transition-all duration-300"
+                    className="bg-figgz-primary text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg shadow-2xl hover:shadow-figgz-primary/25 transition-all duration-300 w-full sm:w-auto"
                   >
                     Make Reservation
                   </motion.button>
@@ -124,7 +124,7 @@ function Home() {
                   <motion.button
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-figgz-primary transition-all duration-300"
+                    className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:bg-white hover:text-figgz-primary transition-all duration-300 w-full sm:w-auto"
                   >
                     View Menu
                   </motion.button>
@@ -200,32 +200,33 @@ function Home() {
       </section>
 
       {/* Welcome Section - Section 2 */}
-      <section id="welcome" className="min-h-screen flex items-center bg-gradient-to-br from-gray-50 to-white">
+      <section id="welcome" className="min-h-screen flex items-center bg-gradient-to-br from-gray-50 to-white py-12 sm:py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
             {/* Left Content */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
+              className="mb-8 lg:mb-0"
             >
-              <div className="relative">
+              <div className="relative pb-6 sm:pb-8 md:pb-12">
                 <img 
                   src="/src/assets/demo04.jpg" 
                   alt="Restaurant interior"
-                  className="w-full h-96 object-cover rounded-3xl shadow-2xl"
+                  className="w-full h-64 sm:h-80 md:h-96 object-cover rounded-3xl shadow-2xl"
                 />
                 <motion.div
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
                   viewport={{ once: true }}
-                  className="absolute -bottom-6 -right-6 bg-figgz-primary text-white p-8 rounded-2xl shadow-xl"
+                  className="absolute -bottom-2 -right-2 sm:-bottom-4 sm:-right-4 md:-bottom-6 md:-right-6 bg-figgz-primary text-white p-3 sm:p-4 md:p-6 lg:p-8 rounded-2xl shadow-xl"
                 >
                   <div className="text-center">
-                    <div className="text-3xl font-bold">25+</div>
-                    <div className="text-sm">Years Experience</div>
+                    <div className="text-xl sm:text-2xl md:text-3xl font-bold">25+</div>
+                    <div className="text-xs sm:text-sm">Years Experience</div>
                   </div>
                 </motion.div>
               </div>
@@ -253,7 +254,7 @@ function Home() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="text-4xl lg:text-5xl font-bold text-figgz-secondary mt-4 leading-tight"
+                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-figgz-secondary mt-4 leading-tight"
                   style={{ fontFamily: 'Cormorant Garamond, serif' }}
                 >
                   Welcome to Our
@@ -266,7 +267,7 @@ function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-figgz-paragraph text-lg leading-relaxed"
+                className="text-figgz-paragraph text-base sm:text-lg leading-relaxed"
               >
                 The scallops were perfectly cooked, tender, and flavorful, paired beautifully 
                 with a creamy risotto and seasonal vegetables. The presentation was artful, 
@@ -277,22 +278,22 @@ function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="flex items-center gap-6"
+                className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6"
               >
-                <div className="flex items-center gap-4 bg-figgz-primary text-white px-6 py-4 rounded-2xl">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                <div className="flex items-center gap-3 sm:gap-4 bg-figgz-primary text-white px-4 sm:px-6 py-3 sm:py-4 rounded-2xl w-full sm:w-auto">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                   </svg>
                   <div>
-                    <div className="text-sm opacity-90">Hotline 24/7</div>
-                    <div className="font-bold">+256 3254-2568</div>
+                    <div className="text-xs sm:text-sm opacity-90">Hotline 24/7</div>
+                    <div className="font-bold text-sm sm:text-base">+256 3254-2568</div>
                   </div>
                 </div>
 
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-figgz-primary text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300"
+                  className="bg-figgz-primary text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-sm sm:text-base hover:shadow-lg transition-all duration-300 w-full sm:w-auto"
                 >
                   Make Reservation
                 </motion.button>
@@ -303,19 +304,19 @@ function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
-                className="grid grid-cols-3 gap-8 pt-8 border-t border-gray-200"
+                className="grid grid-cols-3 gap-4 sm:gap-6 md:gap-8 pt-8 border-t border-gray-200"
               >
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-figgz-primary">1000+</div>
-                  <div className="text-figgz-paragraph">Happy Customers</div>
+                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-figgz-primary">1000+</div>
+                  <div className="text-figgz-paragraph text-xs sm:text-sm md:text-base">Happy Customers</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-figgz-primary">50+</div>
-                  <div className="text-figgz-paragraph">Signature Dishes</div>
+                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-figgz-primary">50+</div>
+                  <div className="text-figgz-paragraph text-xs sm:text-sm md:text-base">Signature Dishes</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-figgz-primary">15+</div>
-                  <div className="text-figgz-paragraph">Expert Chefs</div>
+                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-figgz-primary">15+</div>
+                  <div className="text-figgz-paragraph text-xs sm:text-sm md:text-base">Expert Chefs</div>
                 </div>
               </motion.div>
             </motion.div>
@@ -324,7 +325,7 @@ function Home() {
       </section>
 
       {/* Services Section - Section 3 */}
-      <section id="services" className="py-20 bg-gradient-to-br from-orange-50 to-red-50 relative overflow-hidden">
+      <section id="services" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-orange-50 to-red-50 relative overflow-hidden">
         {/* Background Decorative Elements */}
         <div className="absolute top-10 right-10 opacity-10">
           <motion.div
@@ -356,7 +357,7 @@ function Home() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           {/* Section Header */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-8 sm:mb-12 md:mb-16">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -374,7 +375,7 @@ function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-4xl lg:text-6xl font-bold text-figgz-secondary mt-6 mb-4"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-figgz-secondary mt-6 mb-4"
               style={{ fontFamily: 'Cormorant Garamond, serif' }}
             >
               Excellence in Every Experience
@@ -385,7 +386,7 @@ function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
-              className="text-lg text-figgz-paragraph max-w-3xl mx-auto mb-8"
+              className="text-base sm:text-lg text-figgz-paragraph max-w-3xl mx-auto mb-8"
             >
               Discover our comprehensive range of culinary services designed to create 
               unforgettable dining experiences for every occasion.
@@ -1286,7 +1287,7 @@ function Home() {
       </section>
 
       {/* Reservation Form Section */}
-      <section id="booking" className="py-20 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+      <section id="booking" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
         {/* Background Decorative Elements */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-20 left-10 w-32 h-32 bg-figgz-primary/5 rounded-full blur-3xl"></div>
@@ -1295,7 +1296,7 @@ function Home() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Section Header */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-8 sm:mb-12 md:mb-16">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -1313,7 +1314,7 @@ function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-4xl lg:text-6xl font-bold text-figgz-secondary mb-8"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-figgz-secondary mb-6 sm:mb-8"
               style={{ fontFamily: 'Cormorant Garamond, serif' }}
             >
               Make Reservation
@@ -1324,7 +1325,7 @@ function Home() {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               viewport={{ once: true }}
-              className="flex justify-center items-center gap-2 mb-12"
+              className="flex justify-center items-center gap-2 mb-8 sm:mb-12"
             >
               <div className="w-2 h-2 bg-figgz-primary rounded-full"></div>
               <div className="w-8 h-0.5 bg-figgz-primary"></div>
@@ -1335,14 +1336,14 @@ function Home() {
           </div>
 
           {/* Reservation Form Container */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Form Section */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="bg-white rounded-3xl p-8 shadow-2xl border border-gray-100 relative overflow-hidden"
+              className="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-gray-100 relative overflow-hidden"
             >
               {/* Form Background Decoration */}
               <div className="absolute inset-0 bg-gradient-to-br from-figgz-primary/3 to-transparent opacity-50"></div>
