@@ -206,7 +206,7 @@ export const bowenHillsMenuData = {
     }
   ],
   location: {
-    name: "FIGGZ BOWEN HILLS QLD",
+    name: "FIGGZ | BOWEN HILLS QLD",
     address: "7/16 Thompson Street Bowen Hills",
     city: "Queensland 4006",
     phone: "+61 7 3252 8901",

@@ -35,7 +35,7 @@ export const TracingBeam = ({
     <motion.div
       ref={ref}
       className={cn("relative mx-auto h-full w-full max-w-4xl", className)}>
-      <div className="absolute top-3 -left-4 md:-left-20">
+      <div className="absolute top-3 -left-2 sm:-left-4 md:-left-20 z-10">
         <motion.div
           transition={{
             duration: 0.2,
@@ -47,7 +47,7 @@ export const TracingBeam = ({
                 ? "none"
                 : "rgba(0, 0, 0, 0.24) 0px 3px 8px",
           }}
-          className="border-netural-200 ml-[27px] flex h-4 w-4 items-center justify-center rounded-full border shadow-sm">
+          className="border-netural-200 ml-[27px] flex h-4 w-4 items-center justify-center rounded-full border shadow-sm bg-white z-20">
           <motion.div
             transition={{
               duration: 0.2,
@@ -64,7 +64,7 @@ export const TracingBeam = ({
           width="20"
           // Set the SVG height
           height={svgHeight}
-          className="ml-4 block"
+          className="ml-4 block w-5 sm:w-5"
           aria-hidden="true">
           <motion.path
             d={`M 1 0V -36 l 18 24 V ${svgHeight * 0.8} l -18 24V ${svgHeight}`}
@@ -101,7 +101,7 @@ export const TracingBeam = ({
           </defs>
         </svg>
       </div>
-      <div ref={contentRef}>{children}</div>
+      <div ref={contentRef} className="relative z-30">{children}</div>
     </motion.div>
   );
 };

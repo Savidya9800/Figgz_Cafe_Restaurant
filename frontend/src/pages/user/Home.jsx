@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 import Navigation from '../../components/Nav'
 import Footer from '../../components/Footer'
 import { BackgroundBeamsWithCollision } from '../../components/ui/aceternity/background-beams-with-collision'
 
 function Home() {
+  const navigate = useNavigate()
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const heroImages = [
     '/src/assets/demo07.jpg',
@@ -19,6 +21,22 @@ function Home() {
     }, 5000)
     return () => clearInterval(interval)
   }, [])
+
+  // Scroll to reservation section
+  const scrollToReservation = () => {
+    const reservationSection = document.getElementById('booking')
+    if (reservationSection) {
+      reservationSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+  }
+
+  // Navigate to order page
+  const navigateToOrder = () => {
+    navigate('/order')
+  }
 
   return (
     <div className="min-h-screen">
@@ -72,21 +90,10 @@ function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
               {/* Left Content */}
               <div className="text-white">
-                <motion.div
-                  initial={{ opacity: 0, x: -100 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 1, delay: 0.3 }}
-                  className="mb-6"
-                >
-                  <span className="text-figgz-primary text-lg font-medium tracking-wider uppercase">
-                    Welcome to Figgz Cafe
-                  </span>
-                </motion.div>
-
                 <motion.h1
                   initial={{ opacity: 0, x: -100 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 1, delay: 0.5 }}
+                  transition={{ duration: 1, delay: 0.3 }}
                   className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-6 leading-tight"
                   style={{ fontFamily: 'Cormorant Garamond, serif' }}
                 >
@@ -116,7 +123,8 @@ function Home() {
                   <motion.button
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-figgz-primary text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg shadow-2xl hover:shadow-figgz-primary/25 transition-all duration-300 w-full sm:w-auto"
+                    onClick={scrollToReservation}
+                    className="bg-figgz-primary text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg shadow-2xl hover:shadow-figgz-primary/25 transition-all duration-300 w-full sm:w-auto cursor-pointer"
                   >
                     Make Reservation
                   </motion.button>
@@ -124,7 +132,8 @@ function Home() {
                   <motion.button
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:bg-white hover:text-figgz-primary transition-all duration-300 w-full sm:w-auto"
+                    onClick={navigateToOrder}
+                    className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:bg-white hover:text-figgz-primary transition-all duration-300 w-full sm:w-auto cursor-pointer"
                   >
                     View Menu
                   </motion.button>
@@ -293,7 +302,8 @@ function Home() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-figgz-primary text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-sm sm:text-base hover:shadow-lg transition-all duration-300 w-full sm:w-auto"
+                  onClick={scrollToReservation}
+                  className="bg-figgz-primary text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-sm sm:text-base hover:shadow-lg transition-all duration-300 w-full sm:w-auto cursor-pointer"
                 >
                   Make Reservation
                 </motion.button>

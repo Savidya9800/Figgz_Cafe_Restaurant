@@ -129,12 +129,21 @@ function Navigation() {
             className="fixed top-0 left-0 right-0 z-50"
             style={{
               backgroundColor:
-                scrollY > 50 ? "rgba(255, 255, 255, 0.95)" : "transparent",
-              backdropFilter: scrollY > 50 ? "blur(12px)" : "none",
+                scrollY > 50 
+                  ? "rgba(255, 255, 255, 0.95)" 
+                  : "transparent",
+              backdropFilter: 
+                scrollY > 50 
+                  ? "blur(12px)" 
+                  : "none",
               boxShadow:
-                scrollY > 50 ? "0 25px 50px -12px rgba(0, 0, 0, 0.25)" : "none",
+                scrollY > 50 
+                  ? "0 25px 50px -12px rgba(0, 0, 0, 0.25)" 
+                  : "none",
               borderBottom:
-                scrollY > 50 ? "1px solid rgba(229, 231, 235, 0.8)" : "none",
+                scrollY > 50 
+                  ? "1px solid rgba(229, 231, 235, 0.8)" 
+                  : "none",
               transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
             }}
           >
@@ -145,19 +154,60 @@ function Navigation() {
                   className="flex-shrink-0"
                   transition={{ duration: 0.2 }}
                 >
-                  <img
-                    src="/src/assets/logo.png"
-                    alt="Figgz Cafe"
-                    className="h-18 w-auto object-contain"
-                    style={{
-                      filter: scrollY > 50 ? "brightness(0) saturate(100%)" : "none",
-                      transition: "filter 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+                  <Link 
+                    to="/" 
+                    className="block cursor-pointer"
+                    onClick={() => {
+                      // If we're already on home page, scroll to top
+                      if (location.pathname === "/") {
+                        window.scrollTo({
+                          top: 0,
+                          behavior: "smooth",
+                        });
+                      }
                     }}
-                  />
+                  >
+                    <img
+                      src="/src/assets/logo.png"
+                      alt="Figgz Cafe"
+                      className="h-18 w-auto object-contain hover:scale-105 transition-transform duration-300"
+                      style={{
+                        filter: scrollY > 50 ? "brightness(0) saturate(100%)" : "none",
+                        transition: "filter 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+                      }}
+                    />
+                  </Link>
                 </motion.div>
 
                 {/* Center Navigation - Hidden on smaller screens */}
-                <div className="hidden lg:flex items-center space-x-8">
+                <div 
+                  className="hidden lg:flex items-center space-x-8 px-6 py-3 rounded-full"
+                  style={{
+                    backgroundColor: 
+                      isHomePage && scrollY <= 50 
+                        ? "rgba(0, 0, 0, 0.3)" 
+                        : scrollY > 50 
+                          ? "rgba(255, 255, 255, 0.1)" 
+                          : "transparent",
+                    backdropFilter: 
+                      isHomePage && scrollY <= 50 
+                        ? "blur(8px)" 
+                        : scrollY > 50 
+                          ? "blur(4px)" 
+                          : "none",
+                    border: 
+                      isHomePage && scrollY <= 50 
+                        ? "1px solid rgba(255, 255, 255, 0.1)" 
+                        : scrollY > 50 
+                          ? "1px solid rgba(0, 0, 0, 0.05)" 
+                          : "none",
+                    boxShadow: 
+                      scrollY > 50 
+                        ? "0 4px 12px rgba(0, 0, 0, 0.05)" 
+                        : "none",
+                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+                  }}
+                >
                   {navItems.map((item, index) => {
                     const isActive = isHomePage
                       ? false // On home page, we don't highlight based on route
@@ -180,6 +230,9 @@ function Navigation() {
                                 ? "text-figgz-secondary"
                                 : "text-white"
                             } ${isActive ? "text-figgz-primary" : ""}`}
+                            style={{
+                              textShadow: isHomePage && scrollY <= 50 ? "0 2px 8px rgba(0, 0, 0, 0.5)" : "none"
+                            }}
                             onClick={() => {
                               const element = document.querySelector(
                                 `#${item.sectionId}`
@@ -201,6 +254,9 @@ function Navigation() {
                                 ? "text-figgz-secondary"
                                 : "text-white"
                             } ${isActive ? "text-figgz-primary" : ""}`}
+                            style={{
+                              textShadow: isHomePage && scrollY <= 50 ? "0 2px 8px rgba(0, 0, 0, 0.5)" : "none"
+                            }}
                             onClick={() => {
                               if (isHomePage) {
                                 // If already on home page, scroll to booking section
@@ -242,6 +298,9 @@ function Navigation() {
                                 ? "text-figgz-secondary"
                                 : "text-white"
                             } ${isActive ? "text-figgz-primary" : ""}`}
+                            style={{
+                              textShadow: isHomePage && scrollY <= 50 ? "0 2px 8px rgba(0, 0, 0, 0.5)" : "none"
+                            }}
                           >
                             {item.name}
                           </Link>

@@ -206,7 +206,7 @@ export const taringaMenuData = {
     }
   ],
   location: {
-    name: "FIGGZ TARINGA QLD",
+    name: "FIGGZ | TARINGA QLD",
     address: "4/86 Whitmore Street Taringa",
     city: "Queensland 4068",
     phone: "+61 7 3371 4567",

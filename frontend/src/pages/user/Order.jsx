@@ -16,7 +16,7 @@ function Order() {
   const locations = [
     {
       id: 2,
-      name: "FIGGZ BOWEN HILLS QLD",
+      name: "BOWEN HILLS QLD",
       address: "7/16 Thompson Street Bowen Hills",
       city: "Queensland 4006",
       phone: "+61 7 3252 8901",
@@ -32,7 +32,7 @@ function Order() {
     },
     {
       id: 1,
-      name: "FIGGZ TARINGA QLD",
+      name: "TARINGA QLD",
       address: "4/86 Whitmore Street Taringa",
       city: "Queensland 4068",
       phone: "+61 7 3371 4567",
@@ -177,9 +177,9 @@ function Order() {
             </button>
           </motion.div>
 
-          {/* Floating Elements - Hidden on mobile */}
+          {/* Floating Elements */}
           <motion.div
-            className="absolute top-1/4 left-10 w-20 h-20 hidden lg:block"
+            className="absolute top-1/4 left-10 w-20 h-20"
             animate={{
               y: [-20, 20, -20],
               rotate: [0, 180, 360]
@@ -194,7 +194,7 @@ function Order() {
           </motion.div>
 
           <motion.div
-            className="absolute bottom-1/4 right-10 w-16 h-16 hidden lg:block"
+            className="absolute bottom-1/4 right-10 w-16 h-16"
             animate={{
               y: [20, -20, 20],
               rotate: [360, 180, 0]
@@ -208,10 +208,33 @@ function Order() {
             <div className="w-full h-full rounded-full bg-gradient-to-r from-orange-500/20 to-[#CB3A1A]/20 blur-xl"></div>
           </motion.div>
         </div>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1.5 }}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        >
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="flex flex-col items-center text-white/60"
+          >
+            <span className="text-sm mb-2 tracking-wider uppercase">Scroll Down</span>
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Locations Section */}
-      <section id="locations" className="py-20 bg-gray-50">
+      <section id="locations" className="py-12 sm:py-16 lg:py-20 bg-gray-50">
         <motion.div
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
           variants={containerVariants}
@@ -220,17 +243,17 @@ function Order() {
           viewport={{ once: true }}
         >
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#111111] mb-6">
+          <motion.div variants={itemVariants} className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#111111] mb-4 sm:mb-6">
               Our Locations
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto px-4">
               Visit us at either of our premium locations for an unforgettable dining experience
             </p>
           </motion.div>
 
           {/* Locations Grid */}
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
             {locations.map((location, index) => (
               <motion.div
                 key={location.id}
@@ -239,7 +262,7 @@ function Order() {
                 whileHover={{ scale: 1.02 }}
               >
                 {/* Location Image */}
-                <div className="relative h-64 overflow-hidden">
+                <div className="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
                   <img
                     src={location.image}
                     alt={location.name}
@@ -248,16 +271,16 @@ function Order() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                   
                   {/* Rating Badge */}
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-1">
-                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    <span className="font-semibold text-sm">{location.rating}</span>
+                  <div className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-white/90 backdrop-blur-sm rounded-full px-2.5 py-1.5 sm:px-3 sm:py-2 flex items-center space-x-1">
+                    <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-yellow-400 text-yellow-400" />
+                    <span className="font-semibold text-xs sm:text-sm">{location.rating}</span>
                     <span className="text-gray-500 text-xs">({location.reviews})</span>
                   </div>
 
                   {/* ORDER NOW Button Overlay */}
-                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+                  <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 sm:bottom-4">
                     <motion.button
-                      className="bg-[#CB3A1A] text-white px-8 py-3 rounded-xl font-bold text-lg hover:bg-[#B02E15] transition-colors duration-300"
+                      className="bg-[#CB3A1A] text-white px-6 py-2.5 sm:px-8 sm:py-3 rounded-xl font-bold text-sm sm:text-base lg:text-lg hover:bg-[#B02E15] transition-colors duration-300"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => {
@@ -274,52 +297,52 @@ function Order() {
                 </div>
 
                 {/* Location Details */}
-                <div className="p-6">
+                <div className="p-4 sm:p-6">
                   {/* Location Name */}
-                  <h3 className="text-2xl font-bold text-[#111111] mb-4 text-center">
+                  <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#111111] mb-3 sm:mb-4 text-center">
                     {location.name}
                   </h3>
 
                   {/* Address */}
-                  <div className="flex items-start space-x-3 mb-4">
-                    <MapPin className="w-5 h-5 text-[#CB3A1A] mt-0.5 flex-shrink-0" />
+                  <div className="flex items-start space-x-2.5 sm:space-x-3 mb-3 sm:mb-4">
+                    <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-[#CB3A1A] mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="text-gray-700 font-medium">{location.address}</p>
-                      <p className="text-gray-600">{location.city}</p>
+                      <p className="text-gray-700 font-medium text-sm sm:text-base">{location.address}</p>
+                      <p className="text-gray-600 text-sm sm:text-base">{location.city}</p>
                     </div>
                   </div>
 
                   {/* Contact Info */}
-                  <div className="space-y-3 mb-4">
-                    <div className="flex items-center space-x-3">
-                      <Phone className="w-5 h-5 text-[#CB3A1A]" />
-                      <a href={`tel:${location.phone}`} className="text-gray-700 hover:text-[#CB3A1A] transition-colors">
+                  <div className="space-y-2.5 sm:space-y-3 mb-3 sm:mb-4">
+                    <div className="flex items-center space-x-2.5 sm:space-x-3">
+                      <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-[#CB3A1A]" />
+                      <a href={`tel:${location.phone}`} className="text-gray-700 hover:text-[#CB3A1A] transition-colors text-sm sm:text-base">
                         {location.phone}
                       </a>
                     </div>
-                    <div className="flex items-center space-x-3">
-                      <Mail className="w-5 h-5 text-[#CB3A1A]" />
-                      <a href={`mailto:${location.email}`} className="text-gray-700 hover:text-[#CB3A1A] transition-colors">
+                    <div className="flex items-center space-x-2.5 sm:space-x-3">
+                      <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-[#CB3A1A]" />
+                      <a href={`mailto:${location.email}`} className="text-gray-700 hover:text-[#CB3A1A] transition-colors text-sm sm:text-base break-all">
                         {location.email}
                       </a>
                     </div>
                   </div>
 
                   {/* Hours */}
-                  <div className="flex items-start space-x-3 mb-4">
-                    <Clock className="w-5 h-5 text-[#CB3A1A] mt-0.5" />
+                  <div className="flex items-start space-x-2.5 sm:space-x-3 mb-3 sm:mb-4">
+                    <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-[#CB3A1A] mt-0.5" />
                     <div>
-                      <p className="text-gray-700 font-medium">Mon - Fri: {location.hours.weekdays}</p>
-                      <p className="text-gray-700 font-medium">Sat - Sun: {location.hours.weekends}</p>
+                      <p className="text-gray-700 font-medium text-sm sm:text-base">Mon - Fri: {location.hours.weekdays}</p>
+                      <p className="text-gray-700 font-medium text-sm sm:text-base">Sat - Sun: {location.hours.weekends}</p>
                     </div>
                   </div>
 
                   {/* Features */}
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
                     {location.features.map((feature, featureIndex) => (
                       <span
                         key={featureIndex}
-                        className="bg-[#CB3A1A]/10 text-[#CB3A1A] px-3 py-1 rounded-full text-sm font-medium"
+                        className="bg-[#CB3A1A]/10 text-[#CB3A1A] px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium"
                       >
                         {feature}
                       </span>
@@ -331,27 +354,47 @@ function Order() {
           </div>
 
           {/* Additional Info */}
-          <motion.div variants={itemVariants} className="text-center mt-16">
-            <div className="bg-gradient-to-r from-[#CB3A1A]/5 to-orange-500/5 rounded-2xl p-8 border border-[#CB3A1A]/20">
-              <div className="flex items-center justify-center mb-4">
-                <Heart className="w-6 h-6 text-[#CB3A1A] mr-2" />
-                <h3 className="text-2xl font-bold text-[#111111]">Can't decide?</h3>
+          <motion.div variants={itemVariants} className="text-center mt-12 sm:mt-16">
+            <div className="bg-gradient-to-r from-[#CB3A1A]/5 to-orange-500/5 rounded-2xl p-6 sm:p-8 border border-[#CB3A1A]/20">
+              <div className="flex items-center justify-center mb-3 sm:mb-4">
+                <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-[#CB3A1A] mr-2" />
+                <h3 className="text-xl sm:text-2xl font-bold text-[#111111]">Can't decide?</h3>
               </div>
-              <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+              <p className="text-gray-600 text-sm sm:text-base mb-4 sm:mb-6 max-w-2xl mx-auto leading-relaxed px-2">
                 Both locations offer the same exceptional quality and service. Choose the one closest to you or visit both to experience our complete range!
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                 <motion.button
-                  className="bg-[#CB3A1A] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#B02E15] transition-colors"
+                  className="bg-[#CB3A1A] text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl font-semibold text-sm sm:text-base hover:bg-[#B02E15] transition-colors"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    navigate('/menu/bowen-hills', { replace: true });
+                  }}
                 >
                   View Full Menu
                 </motion.button>
                 <motion.button
-                  className="border-2 border-[#CB3A1A] text-[#CB3A1A] px-6 py-3 rounded-xl font-semibold hover:bg-[#CB3A1A] hover:text-white transition-colors"
+                  className="border-2 border-[#CB3A1A] text-[#CB3A1A] px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl font-semibold text-sm sm:text-base hover:bg-[#CB3A1A] hover:text-white transition-colors"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    // Navigate to home page and scroll to booking section
+                    navigate("/");
+                    // Use a longer delay and retry mechanism to ensure page loads
+                    const scrollToBooking = () => {
+                      const element = document.querySelector("#booking");
+                      if (element) {
+                        element.scrollIntoView({
+                          behavior: "smooth",
+                        });
+                      } else {
+                        // If element not found, try again after a short delay
+                        setTimeout(scrollToBooking, 200);
+                      }
+                    };
+                    setTimeout(scrollToBooking, 500); // Longer initial delay
+                  }}
                 >
                   Make Reservation
                 </motion.button>
