@@ -19,7 +19,7 @@ function Order() {
       name: "BOWEN HILLS QLD",
       address: "7/16 Thompson Street Bowen Hills",
       city: "Queensland 4006",
-      phone: "+61 7 3252 8901",
+      phone: "(07) 3155 3873",
       email: "bowenhills@figgzcafe.com",
       hours: {
         weekdays: "6:30 AM - 9:30 PM",
@@ -35,7 +35,7 @@ function Order() {
       name: "TARINGA QLD",
       address: "4/86 Whitmore Street Taringa",
       city: "Queensland 4068",
-      phone: "+61 7 3371 4567",
+      phone: "(07) 3870 4589",
       email: "taringa@figgzcafe.com",
       hours: {
         weekdays: "7:00 AM - 9:00 PM",

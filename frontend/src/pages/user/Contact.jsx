@@ -256,8 +256,8 @@ function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-[#111111] mb-1">Our Restaurant Address</h3>
-                      <p className="text-[#74787C] text-sm mb-1">4/86 Whitmore Street Taringa</p>
-                      <p className="text-[#74787C] text-sm">Queensland 4068</p>
+                      <p className="text-[#74787C] text-sm mb-1">7/16 Thompson Street</p>
+                      <p className="text-[#74787C] text-sm">Bowen Hills 4006</p>
                     </div>
                   </motion.div>
 
@@ -386,7 +386,7 @@ function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-[#111111] mb-1">Phone Number & Email</h3>
-                      <p className="text-[#74787C] text-sm mb-1">(07) 3870 4309</p>
+                      <p className="text-[#74787C] text-sm mb-1">(07) 3870 4589</p>
                       <p className="text-[#74787C] text-sm">taringa@figgzcafe.com</p>
                     </div>
                   </motion.div>
@@ -406,8 +406,8 @@ function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-[#111111] mb-1">Our Restaurant Address</h3>
-                      <p className="text-[#74787C] text-sm mb-1">7/10 Thompson Street Bowen Hills</p>
-                      <p className="text-[#74787C] text-sm">Queensland 4006</p>
+                      <p className="text-[#74787C] text-sm mb-1">4/86 Whitmore Street</p>
+                      <p className="text-[#74787C] text-sm">Taringa 4068</p>
                     </div>
                   </motion.div>
 
@@ -507,8 +507,7 @@ function Contact() {
             </motion.div>
             
             <p className="text-[#74787C] text-lg max-w-2xl mx-auto leading-relaxed">
-              Lorem ipsum dolor sit amet consectetur adipiscing, elit cursus quis libero erat, justo in habitasse
-              aliquam mi. Condimentum inceptos euismod eu nunc cd nisl fermentum erat pretada
+              Have a question, special request, or just want to say hello? Leave us a message — We'd love to hear from you.
             </p>
           </motion.div>
 

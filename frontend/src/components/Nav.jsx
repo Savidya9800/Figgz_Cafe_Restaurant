@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import LoginModal from "./LoginModal";
 
 // Simple User Icon Component
 const UserIcon = ({ className }) => (
@@ -23,11 +25,28 @@ function Navigation() {
   const [isVisible, setIsVisible] = useState(true); // Start visible for hero section
   const [scrollY, setScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { user, logout, isAuthenticated } = useAuth();
 
   // Check if we're on the home page to determine if we should use sections or routes
   const isHomePage = location.pathname === "/";
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showUserDropdown && !event.target.closest('.user-dropdown')) {
+        setShowUserDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showUserDropdown]);
 
   const navItems = [
     { name: "Home", href: "/", sectionId: "home", icon: "🏠" },
@@ -350,15 +369,86 @@ function Navigation() {
                     </div>
                   </motion.button>
 
-                  {/* User Icon */}
-                  <motion.button
-                    className={`p-2 rounded-full transition-all duration-300 ${
-                      scrollY > 50 ? "text-figgz-secondary" : "text-white"
-                    }`}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <UserIcon className="h-6 w-6" />
-                  </motion.button>
+                  {/* User Icon / Profile */}
+                  <div className="relative user-dropdown">
+                    {isAuthenticated ? (
+                      <motion.button
+                        onClick={() => setShowUserDropdown(!showUserDropdown)}
+                        className={`flex items-center gap-2 p-2 rounded-full transition-all duration-300 ${
+                          scrollY > 50 ? "text-figgz-secondary" : "text-white"
+                        }`}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        {user?.avatar ? (
+                          <img
+                            src={user.avatar}
+                            alt={user.name}
+                            className="h-8 w-8 rounded-full border-2 border-amber-400"
+                          />
+                        ) : (
+                          <UserIcon className="h-6 w-6" />
+                        )}
+                        <span className="hidden md:block text-sm font-medium">
+                          {user?.name?.split(' ')[0]}
+                        </span>
+                      </motion.button>
+                    ) : (
+                      <motion.button
+                        onClick={() => setIsLoginModalOpen(true)}
+                        className={`flex items-center gap-2 p-2 rounded-full transition-all duration-300 ${
+                          scrollY > 50 ? "text-figgz-secondary hover:bg-amber-50" : "text-white hover:bg-white/10"
+                        }`}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <UserIcon className="h-6 w-6" />
+                        <span className="hidden md:block text-sm font-medium">Sign In</span>
+                      </motion.button>
+                    )}
+
+                    {/* User Dropdown */}
+                    <AnimatePresence>
+                      {showUserDropdown && isAuthenticated && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
+                        >
+                          <div className="px-4 py-2 border-b border-gray-100">
+                            <p className="text-sm font-medium text-gray-900">{user?.name}</p>
+                            <p className="text-sm text-gray-500">{user?.email}</p>
+                          </div>
+                          <button
+                            onClick={() => {
+                              navigate('/profile');
+                              setShowUserDropdown(false);
+                            }}
+                            className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          >
+                            Profile
+                          </button>
+                          <button
+                            onClick={() => {
+                              navigate('/my-orders');
+                              setShowUserDropdown(false);
+                            }}
+                            className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          >
+                            My Orders
+                          </button>
+                          <button
+                            onClick={() => {
+                              logout();
+                              setShowUserDropdown(false);
+                            }}
+                            className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                          >
+                            Sign Out
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
               </div>
             </div>
@@ -586,6 +676,12 @@ function Navigation() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Login Modal */}
+      <LoginModal 
+        isOpen={isLoginModalOpen} 
+        onClose={() => setIsLoginModalOpen(false)} 
+      />
     </>
   );
 }

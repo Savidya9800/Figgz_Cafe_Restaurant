@@ -1,47 +1,47 @@
-import React, { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
-import Navigation from '../../components/Nav'
-import Footer from '../../components/Footer'
-import { BackgroundBeamsWithCollision } from '../../components/ui/aceternity/background-beams-with-collision'
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import Navigation from "../../components/Nav";
+import Footer from "../../components/Footer";
+import { BackgroundBeamsWithCollision } from "../../components/ui/aceternity/background-beams-with-collision";
 
 function Home() {
-  const navigate = useNavigate()
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const navigate = useNavigate();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const heroImages = [
-    '/src/assets/demo07.jpg',
-    '/src/assets/demo08.jpg',
-    '/src/assets/demo09.jpg'
-  ]
+    "/src/assets/demo07.jpg",
+    "/src/assets/demo08.jpg",
+    "/src/assets/demo09.jpg",
+  ];
 
   // Auto-change hero images
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length)
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [])
+      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Scroll to reservation section
   const scrollToReservation = () => {
-    const reservationSection = document.getElementById('booking')
+    const reservationSection = document.getElementById("booking");
     if (reservationSection) {
-      reservationSection.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      })
+      reservationSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
-  }
+  };
 
   // Navigate to order page
   const navigateToOrder = () => {
-    navigate('/order')
-  }
+    navigate("/order");
+  };
 
   return (
     <div className="min-h-screen">
       <Navigation />
-      
+
       {/* Hero Section - Section 1 */}
       <section id="home" className="relative h-screen overflow-hidden">
         {/* Background Images with Parallax */}
@@ -51,14 +51,14 @@ function Home() {
               key={index}
               className="absolute inset-0"
               initial={{ opacity: 0, scale: 1.1 }}
-              animate={{ 
+              animate={{
                 opacity: index === currentImageIndex ? 1 : 0,
-                scale: index === currentImageIndex ? 1 : 1.1
+                scale: index === currentImageIndex ? 1 : 1.1,
               }}
               transition={{ duration: 1.5, ease: "easeInOut" }}
             >
-              <img 
-                src={image} 
+              <img
+                src={image}
                 alt={`Restaurant ambiance ${index + 1}`}
                 className="w-full h-full object-cover"
               />
@@ -75,7 +75,7 @@ function Home() {
             className="w-16 h-16 sm:w-32 sm:h-32 border border-figgz-primary rounded-full"
           />
         </div>
-        
+
         <div className="absolute bottom-20 right-4 sm:right-10 opacity-10 sm:opacity-20">
           <motion.div
             animate={{ rotate: -360 }}
@@ -95,13 +95,13 @@ function Home() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 1, delay: 0.3 }}
                   className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-6 leading-tight"
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  style={{ fontFamily: "Cormorant Garamond, serif" }}
                 >
-                  Exquisite Flavors
+                  Everything
                   <br />
-                  <span className="text-figgz-primary">Unforgettable</span>
+                  <span className="text-figgz-primary">MADE IN HOUSE</span>
                   <br />
-                  Moments
+                  <span>Taste the Difference</span>
                 </motion.h1>
 
                 <motion.p
@@ -110,8 +110,9 @@ function Home() {
                   transition={{ duration: 1, delay: 0.7 }}
                   className="text-base sm:text-lg md:text-xl text-gray-200 mb-8 leading-relaxed max-w-lg"
                 >
-                  Discover a culinary journey where passion meets perfection. 
-                  Every dish tells a story, every bite creates a memory.
+                  Discover a culinary journey where every dish is prepared
+                  in-house with precision and passion. Tradition lives in every
+                  flavor, and every bite tells a timeless story
                 </motion.p>
 
                 <motion.div
@@ -128,7 +129,7 @@ function Home() {
                   >
                     Make Reservation
                   </motion.button>
-                  
+
                   <motion.button
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
@@ -151,7 +152,11 @@ function Home() {
                   {/* Floating Card 1 */}
                   <motion.div
                     animate={{ y: [-10, 10, -10] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                     className="absolute top-0 right-0 bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-2xl w-64"
                   >
                     <div className="flex items-center gap-4">
@@ -159,8 +164,12 @@ function Home() {
                         <span className="text-white text-2xl">★</span>
                       </div>
                       <div>
-                        <h4 className="font-bold text-figgz-secondary">Premium Quality</h4>
-                        <p className="text-figgz-paragraph text-sm">Fresh ingredients daily</p>
+                        <h4 className="font-bold text-figgz-secondary">
+                          Premium Quality
+                        </h4>
+                        <p className="text-figgz-paragraph text-sm">
+                          Fresh ingredients daily
+                        </p>
                       </div>
                     </div>
                   </motion.div>
@@ -168,16 +177,25 @@ function Home() {
                   {/* Floating Card 2 */}
                   <motion.div
                     animate={{ y: [10, -10, 10] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 2,
+                    }}
                     className="absolute top-32 left-0 bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-2xl w-64"
                   >
                     <div className="flex items-center gap-4">
                       <div className="w-16 h-16 bg-figgz-primary rounded-full flex items-center justify-center">
-                        <span className="text-white text-2xl">👨‍🍳</span>
+                        <span className="text-white text-2xl">🍽️</span>
                       </div>
                       <div>
-                        <h4 className="font-bold text-figgz-secondary">Expert Chefs</h4>
-                        <p className="text-figgz-paragraph text-sm">Michelin trained team</p>
+                        <h4 className="font-bold text-figgz-secondary">
+                          Signature Flavors
+                        </h4>
+                        <p className="text-figgz-paragraph text-sm">
+                          Unique tastes
+                        </p>
                       </div>
                     </div>
                   </motion.div>
@@ -209,7 +227,10 @@ function Home() {
       </section>
 
       {/* Welcome Section - Section 2 */}
-      <section id="welcome" className="min-h-screen flex items-center bg-gradient-to-br from-gray-50 to-white py-12 sm:py-16 md:py-20">
+      <section
+        id="welcome"
+        className="min-h-screen flex items-center bg-gradient-to-br from-gray-50 to-white py-12 sm:py-16 md:py-20"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
             {/* Left Content */}
@@ -221,8 +242,8 @@ function Home() {
               className="mb-8 lg:mb-0"
             >
               <div className="relative pb-6 sm:pb-8 md:pb-12">
-                <img 
-                  src="/src/assets/demo04.jpg" 
+                <img
+                  src="/src/assets/demo04.jpg"
                   alt="Restaurant interior"
                   className="w-full h-64 sm:h-80 md:h-96 object-cover rounded-3xl shadow-2xl"
                 />
@@ -234,7 +255,9 @@ function Home() {
                   className="absolute -bottom-2 -right-2 sm:-bottom-4 sm:-right-4 md:-bottom-6 md:-right-6 bg-figgz-primary text-white p-3 sm:p-4 md:p-6 lg:p-8 rounded-2xl shadow-xl"
                 >
                   <div className="text-center">
-                    <div className="text-xl sm:text-2xl md:text-3xl font-bold">25+</div>
+                    <div className="text-xl sm:text-2xl md:text-3xl font-bold">
+                      25+
+                    </div>
                     <div className="text-xs sm:text-sm">Years Experience</div>
                   </div>
                 </motion.div>
@@ -250,7 +273,7 @@ function Home() {
               className="space-y-8"
             >
               <div>
-                <motion.span 
+                <motion.span
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   transition={{ delay: 0.2 }}
@@ -258,13 +281,13 @@ function Home() {
                 >
                   About Our Restaurant
                 </motion.span>
-                
-                <motion.h2 
+
+                <motion.h2
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
                   className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-figgz-secondary mt-4 leading-tight"
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                  style={{ fontFamily: "Cormorant Garamond, serif" }}
                 >
                   Welcome to Our
                   <br />
@@ -272,15 +295,16 @@ function Home() {
                 </motion.h2>
               </div>
 
-              <motion.p 
+              <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-figgz-paragraph text-base sm:text-lg leading-relaxed"
+                className="text-figgz-paragraph text-base sm:text-lg leading-relaxed text-justify"
               >
-                The scallops were perfectly cooked, tender, and flavorful, paired beautifully 
-                with a creamy risotto and seasonal vegetables. The presentation was artful, 
-                showcasing the chef's attention to detail.
+                Each dish at Figgz is crafted with care, balancing bold flavors
+                and elegant presentation. From seasonal ingredients to timeless
+                recipes, we deliver a dining experience that’s both comforting
+                and memorable.
               </motion.p>
 
               <motion.div
@@ -290,12 +314,20 @@ function Home() {
                 className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6"
               >
                 <div className="flex items-center gap-3 sm:gap-4 bg-figgz-primary text-white px-4 sm:px-6 py-3 sm:py-4 rounded-2xl w-full sm:w-auto">
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                  <svg
+                    className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
                   </svg>
                   <div>
-                    <div className="text-xs sm:text-sm opacity-90">Hotline 24/7</div>
-                    <div className="font-bold text-sm sm:text-base">+256 3254-2568</div>
+                    <div className="text-xs sm:text-sm opacity-90">
+                      All Ingredients Fresh
+                    </div>
+                    <div className="font-bold text-sm sm:text-base">
+                      Sourced daily from local farms
+                    </div>
                   </div>
                 </div>
 
@@ -317,16 +349,28 @@ function Home() {
                 className="grid grid-cols-3 gap-4 sm:gap-6 md:gap-8 pt-8 border-t border-gray-200"
               >
                 <div className="text-center">
-                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-figgz-primary">1000+</div>
-                  <div className="text-figgz-paragraph text-xs sm:text-sm md:text-base">Happy Customers</div>
+                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-figgz-primary">
+                    1000+
+                  </div>
+                  <div className="text-figgz-paragraph text-xs sm:text-sm md:text-base">
+                    Happy Customers
+                  </div>
                 </div>
                 <div className="text-center">
-                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-figgz-primary">50+</div>
-                  <div className="text-figgz-paragraph text-xs sm:text-sm md:text-base">Signature Dishes</div>
+                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-figgz-primary">
+                    50+
+                  </div>
+                  <div className="text-figgz-paragraph text-xs sm:text-sm md:text-base">
+                    Signature Dishes
+                  </div>
                 </div>
                 <div className="text-center">
-                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-figgz-primary">15+</div>
-                  <div className="text-figgz-paragraph text-xs sm:text-sm md:text-base">Expert Chefs</div>
+                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-figgz-primary">
+                    25+
+                  </div>
+                  <div className="text-figgz-paragraph text-xs sm:text-sm md:text-base">
+                    Premium Drinks
+                  </div>
                 </div>
               </motion.div>
             </motion.div>
@@ -335,7 +379,10 @@ function Home() {
       </section>
 
       {/* Services Section - Section 3 */}
-      <section id="services" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-orange-50 to-red-50 relative overflow-hidden">
+      <section
+        id="services"
+        className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-orange-50 to-red-50 relative overflow-hidden"
+      >
         {/* Background Decorative Elements */}
         <div className="absolute top-10 right-10 opacity-10">
           <motion.div
@@ -344,8 +391,11 @@ function Home() {
             className="w-32 h-32"
           >
             <svg viewBox="0 0 100 100" className="w-full h-full">
-              <path d="M50 10 L60 40 L90 40 L68 58 L78 88 L50 70 L22 88 L32 58 L10 40 L40 40 Z" 
-                    fill="currentColor" className="text-figgz-primary"/>
+              <path
+                d="M50 10 L60 40 L90 40 L68 58 L78 88 L50 70 L22 88 L32 58 L10 40 L40 40 Z"
+                fill="currentColor"
+                className="text-figgz-primary"
+              />
             </svg>
           </motion.div>
         </div>
@@ -357,10 +407,24 @@ function Home() {
             className="w-24 h-24"
           >
             <svg viewBox="0 0 100 100" className="w-full h-full">
-              <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" 
-                      strokeWidth="2" className="text-figgz-primary"/>
-              <circle cx="50" cy="50" r="20" fill="none" stroke="currentColor" 
-                      strokeWidth="2" className="text-figgz-primary"/>
+              <circle
+                cx="50"
+                cy="50"
+                r="40"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                className="text-figgz-primary"
+              />
+              <circle
+                cx="50"
+                cy="50"
+                r="20"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                className="text-figgz-primary"
+              />
             </svg>
           </motion.div>
         </div>
@@ -386,7 +450,7 @@ function Home() {
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
               className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-figgz-secondary mt-6 mb-4"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
+              style={{ fontFamily: "Cormorant Garamond, serif" }}
             >
               Excellence in Every Experience
             </motion.h2>
@@ -398,8 +462,8 @@ function Home() {
               viewport={{ once: true }}
               className="text-base sm:text-lg text-figgz-paragraph max-w-3xl mx-auto mb-8"
             >
-              Discover our comprehensive range of culinary services designed to create 
-              unforgettable dining experiences for every occasion.
+              Discover our comprehensive range of culinary services designed to
+              create unforgettable dining experiences for every occasion.
             </motion.p>
 
             <motion.div
@@ -429,33 +493,41 @@ function Home() {
             >
               <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-figgz-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
+
                 <div className="relative z-10">
                   <div className="w-full h-48 bg-gray-200 rounded-2xl mb-6 overflow-hidden">
-                    <img 
-                      src="/src/assets/demo05.jpg" 
+                    <img
+                      src="/src/assets/demo05.jpg"
                       alt="Fine Dining Experience"
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                   </div>
-                  
+
                   <div className="text-center">
                     <motion.div
                       whileHover={{ scale: 1.1 }}
                       className="w-16 h-16 bg-figgz-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-figgz-secondary transition-colors duration-300"
                     >
-                      <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                      <svg
+                        className="w-8 h-8 text-white"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
                       </svg>
                     </motion.div>
-                    
-                    <h3 className="text-2xl font-bold text-figgz-secondary mb-3" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+
+                    <h3
+                      className="text-2xl font-bold text-figgz-secondary mb-3"
+                      style={{ fontFamily: "Cormorant Garamond, serif" }}
+                    >
                       Fine Dining Experience
                     </h3>
-                    
+
                     <p className="text-figgz-paragraph leading-relaxed">
-                      Indulge in our exquisite fine dining experience with carefully crafted dishes 
-                      that showcase the finest ingredients and culinary artistry.
+                      Indulge in our exquisite fine dining experience with
+                      carefully crafted dishes that showcase the finest
+                      ingredients and culinary artistry.
                     </p>
                   </div>
                 </div>
@@ -472,33 +544,41 @@ function Home() {
             >
               <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-figgz-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
+
                 <div className="relative z-10">
                   <div className="w-full h-48 bg-gray-200 rounded-2xl mb-6 overflow-hidden">
-                    <img 
-                      src="/src/assets/demo06.jpg" 
-                      alt="Private Events"
+                    <img
+                      src="/src/assets/demo06.jpg"
+                      alt="Gourmet To-Go"
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                   </div>
-                  
+
                   <div className="text-center">
                     <motion.div
                       whileHover={{ scale: 1.1 }}
                       className="w-16 h-16 bg-figgz-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-figgz-secondary transition-colors duration-300"
                     >
-                      <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+                      <svg
+                        className="w-8 h-8 text-white"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
                       </svg>
                     </motion.div>
-                    
-                    <h3 className="text-2xl font-bold text-figgz-secondary mb-3" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
-                      Private Events & Catering
+
+                    <h3
+                      className="text-2xl font-bold text-figgz-secondary mb-3"
+                      style={{ fontFamily: "Cormorant Garamond, serif" }}
+                    >
+                      Gourmet To-Go
                     </h3>
-                    
+
                     <p className="text-figgz-paragraph leading-relaxed">
-                      Host your special occasions with our exclusive private dining and 
-                      professional catering services for memorable celebrations.
+                      Enjoy the best of Figgz at home. From ready-made meals to
+                      handcrafted sauces and dressings every bite with
+                      restaurant-quality.
                     </p>
                   </div>
                 </div>
@@ -515,33 +595,45 @@ function Home() {
             >
               <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-figgz-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
+
                 <div className="relative z-10">
                   <div className="w-full h-48 bg-gray-200 rounded-2xl mb-6 overflow-hidden">
-                    <img 
-                      src="/src/assets/demo01.jpeg" 
-                      alt="Chef's Table Experience"
+                    <img
+                      src="/src/assets/demo01.jpeg"
+                      alt="Celebrations & Catering"
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                   </div>
-                  
+
                   <div className="text-center">
                     <motion.div
                       whileHover={{ scale: 1.1 }}
                       className="w-16 h-16 bg-figgz-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-figgz-secondary transition-colors duration-300"
                     >
-                      <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 000 2h6a1 1 0 100-2H7zm6 7a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-3 3a1 1 0 100 2h.01a1 1 0 100-2H10zm-4 1a1 1 0 011-1h.01a1 1 0 110 2H7a1 1 0 01-1-1zm1-4a1 1 0 100 2h.01a1 1 0 100-2H7zm2 1a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zm4-4a1 1 0 100 2h.01a1 1 0 100-2H13zM9 9a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zM7 8a1 1 0 000 2h.01a1 1 0 000-2H7z" clipRule="evenodd"/>
+                      <svg
+                        className="w-8 h-8 text-white"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 000 2h6a1 1 0 100-2H7zm6 7a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-3 3a1 1 0 100 2h.01a1 1 0 100-2H10zm-4 1a1 1 0 011-1h.01a1 1 0 110 2H7a1 1 0 01-1-1zm1-4a1 1 0 100 2h.01a1 1 0 100-2H7zm2 1a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zm4-4a1 1 0 100 2h.01a1 1 0 100-2H13zM9 9a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zM7 8a1 1 0 000 2h.01a1 1 0 000-2H7z"
+                          clipRule="evenodd"
+                        />
                       </svg>
                     </motion.div>
-                    
-                    <h3 className="text-2xl font-bold text-figgz-secondary mb-3" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
-                      Chef's Table Experience
+
+                    <h3
+                      className="text-2xl font-bold text-figgz-secondary mb-3"
+                      style={{ fontFamily: "Cormorant Garamond, serif" }}
+                    >
+                      Celebrations & Catering
                     </h3>
-                    
+
                     <p className="text-figgz-paragraph leading-relaxed">
-                      Enjoy an intimate culinary journey at our chef's table with personalized 
-                      menus and direct interaction with our master chefs.
+                      Make every occasion sweeter with our whole cakes and
+                      bespoke catering. Whether it’s an intimate gathering or
+                      grand event.
                     </p>
                   </div>
                 </div>
@@ -563,15 +655,20 @@ function Home() {
               className="bg-figgz-primary text-white px-12 py-4 rounded-full font-semibold text-lg shadow-2xl hover:shadow-figgz-primary/25 transition-all duration-300 inline-flex items-center gap-3"
             >
               Explore All Services
-              <motion.svg 
+              <motion.svg
                 className="w-5 h-5"
-                fill="none" 
-                viewBox="0 0 24 24" 
+                fill="none"
+                viewBox="0 0 24 24"
                 stroke="currentColor"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.3 }}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
               </motion.svg>
             </motion.button>
           </motion.div>
@@ -579,7 +676,10 @@ function Home() {
       </section>
 
       {/* Special Menu Section - Section 4 */}
-      <section id="special" className="min-h-screen py-12 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+      <section
+        id="special"
+        className="min-h-screen py-12 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden"
+      >
         {/* Background Decorative Elements */}
         <div className="absolute top-0 left-0 w-64 h-64 opacity-5">
           <motion.div
@@ -590,19 +690,22 @@ function Home() {
             className="w-full h-full"
           >
             {/* Decorative Dots Pattern */}
-            <svg viewBox="0 0 100 100" className="w-full h-full text-figgz-primary">
+            <svg
+              viewBox="0 0 100 100"
+              className="w-full h-full text-figgz-primary"
+            >
               {Array.from({ length: 64 }, (_, i) => {
-                const row = Math.floor(i / 8)
-                const col = i % 8
+                const row = Math.floor(i / 8);
+                const col = i % 8;
                 return (
-                  <circle 
+                  <circle
                     key={i}
-                    cx={10 + col * 12} 
-                    cy={10 + row * 12} 
-                    r="1.5" 
+                    cx={10 + col * 12}
+                    cy={10 + row * 12}
+                    r="1.5"
                     fill="currentColor"
                   />
-                )
+                );
               })}
             </svg>
           </motion.div>
@@ -617,7 +720,7 @@ function Home() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
               className="text-5xl lg:text-6xl font-bold text-figgz-secondary mb-4"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
+              style={{ fontFamily: "Cormorant Garamond, serif" }}
             >
               Special
             </motion.h2>
@@ -629,22 +732,28 @@ function Home() {
               viewport={{ once: true }}
               className="flex justify-end mb-4"
             >
-              <motion.button 
+              <motion.button
                 whileHover={{ scale: 1.05, y: -1 }}
                 whileTap={{ scale: 0.98 }}
+                onClick={() => navigate('menu/taringa')}
                 className="flex items-center gap-3 text-figgz-primary font-semibold px-4 py-2 rounded-lg hover:bg-figgz-primary/10 transition-all duration-300 text-lg cursor-pointer"
               >
                 <span className="w-3 h-3 bg-figgz-primary rounded-full"></span>
                 View The Menu
-                <motion.svg 
-                  className="w-5 h-5" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
+                <motion.svg
+                  className="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
                   stroke="currentColor"
                   whileHover={{ x: 3 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
                 </motion.svg>
               </motion.button>
             </motion.div>
@@ -662,13 +771,13 @@ function Home() {
             >
               <div className="bg-white rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden h-80 flex flex-col justify-center">
                 <div className="absolute inset-0 bg-gradient-to-br from-figgz-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
+
                 <div className="relative z-10">
                   {/* Food Image Circle */}
                   <div className="w-32 h-32 mx-auto mb-6 relative">
                     <div className="w-full h-full bg-gray-100 rounded-full overflow-hidden shadow-lg">
-                      <img 
-                        src="/src/assets/demo02.jpeg" 
+                      <img
+                        src="/src/assets/demo02.jpeg"
                         alt="Grilled Seafood Medley"
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
@@ -681,13 +790,17 @@ function Home() {
                       $45
                     </motion.div>
                   </div>
-                  
+
                   <div className="text-center">
-                    <h3 className="text-xl font-bold text-figgz-secondary mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+                    <h3
+                      className="text-xl font-bold text-figgz-secondary mb-2"
+                      style={{ fontFamily: "Cormorant Garamond, serif" }}
+                    >
                       Grilled Seafood Medley
                     </h3>
                     <p className="text-figgz-paragraph text-sm leading-relaxed">
-                      Fresh catch of the day with seasonal vegetables and aromatic herbs
+                      Fresh catch of the day with seasonal vegetables and
+                      aromatic herbs
                     </p>
                   </div>
                 </div>
@@ -704,13 +817,13 @@ function Home() {
             >
               <div className="bg-white rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden h-80 flex flex-col justify-center">
                 <div className="absolute inset-0 bg-gradient-to-br from-figgz-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
+
                 <div className="relative z-10">
                   {/* Food Image Circle */}
                   <div className="w-32 h-32 mx-auto mb-6 relative">
                     <div className="w-full h-full bg-gray-100 rounded-full overflow-hidden shadow-lg">
-                      <img 
-                        src="/src/assets/demo03.jpeg" 
+                      <img
+                        src="/src/assets/demo03.jpeg"
                         alt="Garden Fresh Salad"
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
@@ -723,13 +836,17 @@ function Home() {
                       $45
                     </motion.div>
                   </div>
-                  
+
                   <div className="text-center">
-                    <h3 className="text-xl font-bold text-figgz-secondary mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+                    <h3
+                      className="text-xl font-bold text-figgz-secondary mb-2"
+                      style={{ fontFamily: "Cormorant Garamond, serif" }}
+                    >
                       Garden Fresh Salad
                     </h3>
                     <p className="text-figgz-paragraph text-sm leading-relaxed">
-                      Organic greens with cherry tomatoes and balsamic vinaigrette
+                      Organic greens with cherry tomatoes and balsamic
+                      vinaigrette
                     </p>
                   </div>
                 </div>
@@ -746,13 +863,13 @@ function Home() {
             >
               <div className="bg-white rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden h-80 flex flex-col justify-center">
                 <div className="absolute inset-0 bg-gradient-to-br from-figgz-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
+
                 <div className="relative z-10">
                   {/* Food Image Circle */}
                   <div className="w-32 h-32 mx-auto mb-6 relative">
                     <div className="w-full h-full bg-gray-100 rounded-full overflow-hidden shadow-lg">
-                      <img 
-                        src="/src/assets/demo04.jpg" 
+                      <img
+                        src="/src/assets/demo04.jpg"
                         alt="Prime Beef Steak"
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
@@ -765,13 +882,17 @@ function Home() {
                       $45
                     </motion.div>
                   </div>
-                  
+
                   <div className="text-center">
-                    <h3 className="text-xl font-bold text-figgz-secondary mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+                    <h3
+                      className="text-xl font-bold text-figgz-secondary mb-2"
+                      style={{ fontFamily: "Cormorant Garamond, serif" }}
+                    >
                       Prime Beef Steak
                     </h3>
                     <p className="text-figgz-paragraph text-sm leading-relaxed">
-                      Perfectly grilled prime cut with roasted vegetables and red wine jus
+                      Perfectly grilled prime cut with roasted vegetables and
+                      red wine jus
                     </p>
                   </div>
                 </div>
@@ -791,13 +912,13 @@ function Home() {
             >
               <div className="bg-white rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden h-80 flex flex-col justify-center">
                 <div className="absolute inset-0 bg-gradient-to-br from-figgz-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
+
                 <div className="relative z-10">
                   {/* Food Image Circle */}
                   <div className="w-32 h-32 mx-auto mb-6 relative">
                     <div className="w-full h-full bg-gray-100 rounded-full overflow-hidden shadow-lg">
-                      <img 
-                        src="/src/assets/demo05.jpg" 
+                      <img
+                        src="/src/assets/demo05.jpg"
                         alt="Lobster Thermidor"
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
@@ -810,13 +931,17 @@ function Home() {
                       $65
                     </motion.div>
                   </div>
-                  
+
                   <div className="text-center">
-                    <h3 className="text-xl font-bold text-figgz-secondary mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+                    <h3
+                      className="text-xl font-bold text-figgz-secondary mb-2"
+                      style={{ fontFamily: "Cormorant Garamond, serif" }}
+                    >
                       Lobster Thermidor
                     </h3>
                     <p className="text-figgz-paragraph text-sm leading-relaxed">
-                      Classic French preparation with creamy sauce and fresh herbs
+                      Classic French preparation with creamy sauce and fresh
+                      herbs
                     </p>
                   </div>
                 </div>
@@ -833,13 +958,13 @@ function Home() {
             >
               <div className="bg-white rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden h-80 flex flex-col justify-center">
                 <div className="absolute inset-0 bg-gradient-to-br from-figgz-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
+
                 <div className="relative z-10">
                   {/* Food Image Circle */}
                   <div className="w-32 h-32 mx-auto mb-6 relative">
                     <div className="w-full h-full bg-gray-100 rounded-full overflow-hidden shadow-lg">
-                      <img 
-                        src="/src/assets/demo06.jpg" 
+                      <img
+                        src="/src/assets/demo06.jpg"
                         alt="Chocolate Soufflé"
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
@@ -852,9 +977,12 @@ function Home() {
                       $25
                     </motion.div>
                   </div>
-                  
+
                   <div className="text-center">
-                    <h3 className="text-xl font-bold text-figgz-secondary mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+                    <h3
+                      className="text-xl font-bold text-figgz-secondary mb-2"
+                      style={{ fontFamily: "Cormorant Garamond, serif" }}
+                    >
                       Chocolate Soufflé
                     </h3>
                     <p className="text-figgz-paragraph text-sm leading-relaxed">
@@ -877,18 +1005,24 @@ function Home() {
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-figgz-primary text-white px-12 py-4 rounded-full font-semibold text-lg shadow-2xl hover:shadow-figgz-primary/25 transition-all duration-300 inline-flex items-center gap-3"
+              onClick={() => navigate('/menu/taringa')}
+              className="bg-figgz-primary text-white px-12 py-4 rounded-full font-semibold text-lg shadow-2xl hover:shadow-figgz-primary/25 transition-all duration-300 inline-flex items-center gap-3 cursor-pointer"
             >
               View Full Menu
-              <motion.svg 
+              <motion.svg
                 className="w-5 h-5"
-                fill="none" 
-                viewBox="0 0 24 24" 
+                fill="none"
+                viewBox="0 0 24 24"
                 stroke="currentColor"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.3 }}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
               </motion.svg>
             </motion.button>
           </motion.div>
@@ -896,7 +1030,10 @@ function Home() {
       </section>
 
       {/* Customer Testimonials Section - Section 5 */}
-      <section id="testimonials" className="py-20 bg-gradient-to-br from-orange-50 via-amber-50/30 to-white relative overflow-hidden">
+      <section
+        id="testimonials"
+        className="py-20 bg-gradient-to-br from-orange-50 via-amber-50/30 to-white relative overflow-hidden"
+      >
         {/* Background Decorative Elements */}
         <div className="absolute top-10 right-10 opacity-5">
           <motion.div
@@ -904,8 +1041,15 @@ function Home() {
             transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
             className="w-40 h-40"
           >
-            <svg viewBox="0 0 100 100" className="w-full h-full text-figgz-primary">
-              <path d="M50 10 C70 30, 70 70, 50 90 C30 70, 30 30, 50 10 Z" fill="currentColor" opacity="0.1"/>
+            <svg
+              viewBox="0 0 100 100"
+              className="w-full h-full text-figgz-primary"
+            >
+              <path
+                d="M50 10 C70 30, 70 70, 50 90 C30 70, 30 30, 50 10 Z"
+                fill="currentColor"
+                opacity="0.1"
+              />
             </svg>
           </motion.div>
         </div>
@@ -916,10 +1060,35 @@ function Home() {
             transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
             className="w-32 h-32"
           >
-            <svg viewBox="0 0 100 100" className="w-full h-full text-figgz-primary">
-              <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.3"/>
-              <circle cx="50" cy="50" r="20" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.5"/>
-              <circle cx="50" cy="50" r="10" fill="currentColor" opacity="0.2"/>
+            <svg
+              viewBox="0 0 100 100"
+              className="w-full h-full text-figgz-primary"
+            >
+              <circle
+                cx="50"
+                cy="50"
+                r="30"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1"
+                opacity="0.3"
+              />
+              <circle
+                cx="50"
+                cy="50"
+                r="20"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1"
+                opacity="0.5"
+              />
+              <circle
+                cx="50"
+                cy="50"
+                r="10"
+                fill="currentColor"
+                opacity="0.2"
+              />
             </svg>
           </motion.div>
         </div>
@@ -945,7 +1114,7 @@ function Home() {
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
               className="text-4xl lg:text-6xl font-bold text-figgz-secondary mb-8"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
+              style={{ fontFamily: "Cormorant Garamond, serif" }}
             >
               Our Customer Feedbacks
             </motion.h2>
@@ -977,48 +1146,56 @@ function Home() {
             >
               <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-figgz-primary/3 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
+
                 <div className="relative z-10">
                   {/* Quote Icon */}
                   <div className="mb-6">
-                    <svg className="w-8 h-8 text-figgz-primary/30" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
+                    <svg
+                      className="w-8 h-8 text-figgz-primary/30"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z" />
                     </svg>
                   </div>
-                  
+
                   {/* Testimonial Text */}
                   <p className="text-figgz-paragraph text-lg leading-relaxed mb-8">
-                    "The only minor downside was the noise level, which made conversation a bit challenging at times. However, this did not significantly detract from the overall experience. The Culinary Corner excels in delivering delicious food and exceptional service."
+                    "An exceptional new cafe with excellent coffee and delicious food. Be sure to check out this new place and support a local business! Ignore the one star reviews as it’s obvious that you can’t please everyone I know for a fact if they had of spoken to the owners they would have addresses their concerns. Coffee is amazing every time I have had it and I’m fussy! Try the bacon and egg wrap very yummy and at a great price too!"
                   </p>
-                  
+
                   {/* Customer Info */}
                   <div className="flex items-center gap-4">
                     <div className="w-16 h-16 bg-gray-200 rounded-full overflow-hidden">
-                      <img 
-                        src="/src/assets/demo01.jpeg" 
-                        alt="Amanda Martin"
+                      <img
+                        src="/src/assets/demo01.jpeg"
+                        alt="Detective Hip"
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    
+
                     <div className="flex-1">
-                      <h4 className="font-bold text-figgz-secondary text-lg">Amanda Martin</h4>
-                      <p className="text-figgz-paragraph text-sm">Food Reviewer</p>
+                      <h4 className="font-bold text-figgz-secondary text-lg">
+                        Detective Hip
+                      </h4>
+                      <p className="text-figgz-paragraph text-sm">
+                        Food Reviewer
+                      </p>
                     </div>
-                    
+
                     {/* Star Rating */}
                     <div className="flex gap-1">
                       {[...Array(5)].map((_, i) => (
-                        <motion.svg 
+                        <motion.svg
                           key={i}
                           initial={{ opacity: 0, scale: 0 }}
                           whileInView={{ opacity: 1, scale: 1 }}
                           transition={{ duration: 0.3, delay: 0.1 * i }}
-                          className="w-5 h-5 text-yellow-400" 
-                          fill="currentColor" 
+                          className="w-5 h-5 text-yellow-400"
+                          fill="currentColor"
                           viewBox="0 0 20 20"
                         >
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                         </motion.svg>
                       ))}
                     </div>
@@ -1037,48 +1214,56 @@ function Home() {
             >
               <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-figgz-primary/3 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
+
                 <div className="relative z-10">
                   {/* Quote Icon */}
                   <div className="mb-6">
-                    <svg className="w-8 h-8 text-figgz-primary/30" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
+                    <svg
+                      className="w-8 h-8 text-figgz-primary/30"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z" />
                     </svg>
                   </div>
-                  
+
                   {/* Testimonial Text */}
                   <p className="text-figgz-paragraph text-lg leading-relaxed mb-8">
-                    "Outstanding culinary experience! Every dish was a masterpiece, from presentation to flavor. The staff's attention to detail and warm hospitality made our evening truly special. Highly recommended for special occasions."
+                    "The food at Figgz, was absolutely amazing. It's become increasingly hard to find brewers of decent tea and these guys nailed it. It was brewed beautifully in a pot with tea leaves and the taste was amazing. The staff were so kind and well-mannered, and the atmosphere was lovely. I will add this to one of my favorite places to wait for appointments or catch up on some work. Very grateful for the experience."
                   </p>
-                  
+
                   {/* Customer Info */}
                   <div className="flex items-center gap-4">
                     <div className="w-16 h-16 bg-gray-200 rounded-full overflow-hidden">
-                      <img 
-                        src="/src/assets/demo02.jpeg" 
-                        alt="David Chen"
+                      <img
+                        src="/src/assets/demo02.jpeg"
+                        alt="Mary Ann Ward"
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    
+
                     <div className="flex-1">
-                      <h4 className="font-bold text-figgz-secondary text-lg">David Chen</h4>
-                      <p className="text-figgz-paragraph text-sm">Food Blogger</p>
+                      <h4 className="font-bold text-figgz-secondary text-lg">
+                        Mary Ann Ward
+                      </h4>
+                      <p className="text-figgz-paragraph text-sm">
+                        Food Blogger
+                      </p>
                     </div>
-                    
+
                     {/* Star Rating */}
                     <div className="flex gap-1">
                       {[...Array(5)].map((_, i) => (
-                        <motion.svg 
+                        <motion.svg
                           key={i}
                           initial={{ opacity: 0, scale: 0 }}
                           whileInView={{ opacity: 1, scale: 1 }}
                           transition={{ duration: 0.3, delay: 0.1 * i }}
-                          className="w-5 h-5 text-yellow-400" 
-                          fill="currentColor" 
+                          className="w-5 h-5 text-yellow-400"
+                          fill="currentColor"
                           viewBox="0 0 20 20"
                         >
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                         </motion.svg>
                       ))}
                     </div>
@@ -1097,48 +1282,56 @@ function Home() {
             >
               <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-figgz-primary/3 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
+
                 <div className="relative z-10">
                   {/* Quote Icon */}
                   <div className="mb-6">
-                    <svg className="w-8 h-8 text-figgz-primary/30" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
+                    <svg
+                      className="w-8 h-8 text-figgz-primary/30"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z" />
                     </svg>
                   </div>
-                  
+
                   {/* Testimonial Text */}
                   <p className="text-figgz-paragraph text-lg leading-relaxed mb-8">
-                    "Exceptional dining experience from start to finish. The ambiance was perfect for our anniversary dinner, and every course exceeded our expectations. The wine pairing suggestions were spot-on. Will definitely return!"
+                    "Very cute little cafe. My partner got a coffee and they gave him a little bit of cake for free on top as a sample. He loves the coffe and cake and we have been going ever since! I have tried the smoothies which were amazing and the egg and bacon wrap. Definitely recommend!"
                   </p>
-                  
+
                   {/* Customer Info */}
                   <div className="flex items-center gap-4">
                     <div className="w-16 h-16 bg-gray-200 rounded-full overflow-hidden">
-                      <img 
-                        src="/src/assets/demo03.jpeg" 
-                        alt="Sarah Johnson"
+                      <img
+                        src="/src/assets/demo03.jpeg"
+                        alt="Georgia Radcliffe"
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    
+
                     <div className="flex-1">
-                      <h4 className="font-bold text-figgz-secondary text-lg">Sarah Johnson</h4>
-                      <p className="text-figgz-paragraph text-sm">Travel Writer</p>
+                      <h4 className="font-bold text-figgz-secondary text-lg">
+                        Georgia Radcliffe
+                      </h4>
+                      <p className="text-figgz-paragraph text-sm">
+                        Travel Writer
+                      </p>
                     </div>
-                    
+
                     {/* Star Rating */}
                     <div className="flex gap-1">
                       {[...Array(5)].map((_, i) => (
-                        <motion.svg 
+                        <motion.svg
                           key={i}
                           initial={{ opacity: 0, scale: 0 }}
                           whileInView={{ opacity: 1, scale: 1 }}
                           transition={{ duration: 0.3, delay: 0.1 * i }}
-                          className="w-5 h-5 text-yellow-400" 
-                          fill="currentColor" 
+                          className="w-5 h-5 text-yellow-400"
+                          fill="currentColor"
                           viewBox="0 0 20 20"
                         >
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                         </motion.svg>
                       ))}
                     </div>
@@ -1157,48 +1350,56 @@ function Home() {
             >
               <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-figgz-primary/3 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
+
                 <div className="relative z-10">
                   {/* Quote Icon */}
                   <div className="mb-6">
-                    <svg className="w-8 h-8 text-figgz-primary/30" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
+                    <svg
+                      className="w-8 h-8 text-figgz-primary/30"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z" />
                     </svg>
                   </div>
-                  
+
                   {/* Testimonial Text */}
                   <p className="text-figgz-paragraph text-lg leading-relaxed mb-8">
-                    "A culinary gem in the heart of the city! The chef's innovative approach to traditional dishes creates an unforgettable experience. The service team was knowledgeable and attentive without being intrusive."
+                    "I rarely ever share Google Reviews but I felt like I had to leave a review for Figgz. Every time I go to Figgz I’m impressed with the fresh, healthy and delicious food. Figgz has become a happy place for me to pop in for lunch both to dine in and take away. Highly recommend."
                   </p>
-                  
+
                   {/* Customer Info */}
                   <div className="flex items-center gap-4">
                     <div className="w-16 h-16 bg-gray-200 rounded-full overflow-hidden">
-                      <img 
-                        src="/src/assets/demo04.jpg" 
-                        alt="Michael Rodriguez"
+                      <img
+                        src="/src/assets/demo04.jpg"
+                        alt="Sarah Higgins"
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    
+
                     <div className="flex-1">
-                      <h4 className="font-bold text-figgz-secondary text-lg">Michael Rodriguez</h4>
-                      <p className="text-figgz-paragraph text-sm">Restaurant Critic</p>
+                      <h4 className="font-bold text-figgz-secondary text-lg">
+                        Sarah Higgins
+                      </h4>
+                      <p className="text-figgz-paragraph text-sm">
+                        Restaurant Critic
+                      </p>
                     </div>
-                    
+
                     {/* Star Rating */}
                     <div className="flex gap-1">
                       {[...Array(5)].map((_, i) => (
-                        <motion.svg 
+                        <motion.svg
                           key={i}
                           initial={{ opacity: 0, scale: 0 }}
                           whileInView={{ opacity: 1, scale: 1 }}
                           transition={{ duration: 0.3, delay: 0.1 * i }}
-                          className="w-5 h-5 text-yellow-400" 
-                          fill="currentColor" 
+                          className="w-5 h-5 text-yellow-400"
+                          fill="currentColor"
                           viewBox="0 0 20 20"
                         >
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                         </motion.svg>
                       ))}
                     </div>
@@ -1224,11 +1425,13 @@ function Home() {
                   transition={{ duration: 0.6 }}
                   className="text-4xl font-bold text-figgz-primary mb-2"
                 >
-                  4.9
+                  4.7
                 </motion.div>
-                <p className="text-figgz-paragraph font-medium">Average Rating</p>
+                <p className="text-figgz-paragraph font-medium">
+                  Average Rating
+                </p>
               </div>
-              
+
               <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
                 <motion.div
                   initial={{ scale: 0 }}
@@ -1238,9 +1441,11 @@ function Home() {
                 >
                   2,500+
                 </motion.div>
-                <p className="text-figgz-paragraph font-medium">Happy Customers</p>
+                <p className="text-figgz-paragraph font-medium">
+                  Happy Customers
+                </p>
               </div>
-              
+
               <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
                 <motion.div
                   initial={{ scale: 0 }}
@@ -1252,7 +1457,7 @@ function Home() {
                 </motion.div>
                 <p className="text-figgz-paragraph font-medium">Reviews</p>
               </div>
-              
+
               <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
                 <motion.div
                   initial={{ scale: 0 }}
@@ -1260,9 +1465,11 @@ function Home() {
                   transition={{ duration: 0.6, delay: 0.3 }}
                   className="text-4xl font-bold text-figgz-primary mb-2"
                 >
-                  95%
+                  94%
                 </motion.div>
-                <p className="text-figgz-paragraph font-medium">Satisfaction Rate</p>
+                <p className="text-figgz-paragraph font-medium">
+                  Satisfaction Rate
+                </p>
               </div>
             </div>
           </motion.div>
@@ -1281,15 +1488,20 @@ function Home() {
               className="bg-figgz-primary text-white px-12 py-4 rounded-full font-semibold text-lg shadow-2xl hover:shadow-figgz-primary/25 transition-all duration-300 inline-flex items-center gap-3"
             >
               Read More Reviews
-              <motion.svg 
+              <motion.svg
                 className="w-5 h-5"
-                fill="none" 
-                viewBox="0 0 24 24" 
+                fill="none"
+                viewBox="0 0 24 24"
                 stroke="currentColor"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.3 }}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
               </motion.svg>
             </motion.button>
           </motion.div>
@@ -1297,7 +1509,10 @@ function Home() {
       </section>
 
       {/* Reservation Form Section */}
-      <section id="booking" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+      <section
+        id="booking"
+        className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden"
+      >
         {/* Background Decorative Elements */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-20 left-10 w-32 h-32 bg-figgz-primary/5 rounded-full blur-3xl"></div>
@@ -1325,7 +1540,7 @@ function Home() {
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
               className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-figgz-secondary mb-6 sm:mb-8"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
+              style={{ fontFamily: "Cormorant Garamond, serif" }}
             >
               Make Reservation
             </motion.h2>
@@ -1357,7 +1572,7 @@ function Home() {
             >
               {/* Form Background Decoration */}
               <div className="absolute inset-0 bg-gradient-to-br from-figgz-primary/3 to-transparent opacity-50"></div>
-              
+
               <div className="relative z-10">
                 <form className="space-y-6">
                   {/* First Row - Name and Persons */}
@@ -1373,7 +1588,7 @@ function Home() {
                         required
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
                       <label className="text-sm font-semibold text-figgz-secondary flex items-center gap-2">
                         Persons <span className="text-figgz-primary">*</span>
@@ -1407,7 +1622,7 @@ function Home() {
                         required
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
                       <label className="text-sm font-semibold text-figgz-secondary flex items-center gap-2">
                         Time <span className="text-figgz-primary">*</span>
@@ -1440,7 +1655,8 @@ function Home() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-sm font-semibold text-figgz-secondary flex items-center gap-2">
-                        Email Address <span className="text-figgz-primary">*</span>
+                        Email Address{" "}
+                        <span className="text-figgz-primary">*</span>
                       </label>
                       <input
                         type="email"
@@ -1449,10 +1665,11 @@ function Home() {
                         required
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
                       <label className="text-sm font-semibold text-figgz-secondary flex items-center gap-2">
-                        Phone Number <span className="text-figgz-primary">*</span>
+                        Phone Number{" "}
+                        <span className="text-figgz-primary">*</span>
                       </label>
                       <input
                         type="tel"
@@ -1484,15 +1701,20 @@ function Home() {
                     className="w-full bg-figgz-primary text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-xl hover:shadow-figgz-primary/25 transition-all duration-300 flex items-center justify-center gap-3"
                   >
                     Book Now
-                    <motion.svg 
+                    <motion.svg
                       className="w-5 h-5"
-                      fill="none" 
-                      viewBox="0 0 24 24" 
+                      fill="none"
+                      viewBox="0 0 24 24"
                       stroke="currentColor"
                       whileHover={{ x: 5 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
                     </motion.svg>
                   </motion.button>
                 </form>
@@ -1508,13 +1730,13 @@ function Home() {
               className="relative"
             >
               <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                <img 
-                  src="/src/assets/demo05.jpg" 
+                <img
+                  src="/src/assets/demo05.jpg"
                   alt="Restaurant Interior"
                   className="w-full h-[600px] object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                
+
                 {/* Floating Card on Image */}
                 <div className="absolute bottom-8 left-8 right-8">
                   <motion.div
@@ -1528,7 +1750,8 @@ function Home() {
                       Reserve Your Table
                     </h3>
                     <p className="text-figgz-paragraph mb-4">
-                      Experience fine dining in our elegant atmosphere. Book your table for an unforgettable culinary journey.
+                      Experience fine dining in our elegant atmosphere. Book
+                      your table for an unforgettable culinary journey.
                     </p>
                     <div className="flex items-center gap-4 text-sm text-figgz-paragraph">
                       <div className="flex items-center gap-2">
@@ -1536,8 +1759,18 @@ function Home() {
                         <span>Available Today</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
                         </svg>
                         <span>Quick Confirmation</span>
                       </div>
@@ -1575,11 +1808,15 @@ function Home() {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 viewport={{ once: true }}
                 className="text-3xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 leading-tight"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                style={{ fontFamily: "Cormorant Garamond, serif" }}
               >
-                <span className="text-gray-700 dark:text-gray-200">Discover Our </span>
+                <span className="text-gray-700 dark:text-gray-200">
+                  Discover Our{" "}
+                </span>
                 <span className="text-figgz-primary">Popular & Healthy </span>
-                <span className="text-gray-700 dark:text-gray-200">Menu Selection</span>
+                <span className="text-gray-700 dark:text-gray-200">
+                  Menu Selection
+                </span>
               </motion.h2>
 
               {/* Simple Decorative Line */}
@@ -1603,7 +1840,8 @@ function Home() {
                 viewport={{ once: true }}
                 className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed"
               >
-                Carefully curated nutritious meals, crafted with finest organic ingredients and superfoods for your wellness journey.
+                Carefully curated nutritious meals, crafted with finest organic
+                ingredients and superfoods for your wellness journey.
               </motion.p>
 
               {/* Compact CTA Button */}
@@ -1614,23 +1852,28 @@ function Home() {
                 viewport={{ once: true }}
               >
                 <motion.button
-                  whileHover={{ 
+                  whileHover={{
                     scale: 1.05,
-                    boxShadow: "0 12px 25px rgba(234, 88, 12, 0.3)"
+                    boxShadow: "0 12px 25px rgba(234, 88, 12, 0.3)",
                   }}
                   whileTap={{ scale: 0.95 }}
                   className="inline-flex items-center gap-3 bg-figgz-primary hover:bg-figgz-primary/90 text-white px-8 py-3 rounded-full text-base font-semibold transition-all duration-300 shadow-lg hover:shadow-xl backdrop-blur-sm"
                 >
                   Explore Healthy Menu
-                  <motion.svg 
+                  <motion.svg
                     className="w-5 h-5"
-                    fill="none" 
-                    viewBox="0 0 24 24" 
+                    fill="none"
+                    viewBox="0 0 24 24"
                     stroke="currentColor"
                     whileHover={{ x: 3 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
                   </motion.svg>
                 </motion.button>
               </motion.div>
@@ -1642,7 +1885,7 @@ function Home() {
       {/* Footer Section */}
       <Footer />
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;

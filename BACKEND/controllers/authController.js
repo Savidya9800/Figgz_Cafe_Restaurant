@@ -1,5 +1,8 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const { OAuth2Client } = require('google-auth-library');
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // Generate JWT
 const sendTokenResponse = (user, statusCode, res) => {
@@ -15,7 +18,8 @@ const sendTokenResponse = (user, statusCode, res) => {
             id: user._id,
             name: user.name,
             email: user.email,
-            role: user.role
+            role: user.role,
+            avatar: user.avatar
         }
     });
 };
@@ -126,4 +130,64 @@ exports.logout = async (req, res) => {
         success: true,
         message: 'User logged out successfully'
     });
+};
+
+// @desc    Google OAuth login
+// @route   POST /api/auth/google
+// @access  Public
+exports.googleAuth = async (req, res) => {
+    try {
+        const { token } = req.body;
+
+        if (!token) {
+            return res.status(400).json({
+                success: false,
+                message: 'Google token is required'
+            });
+        }
+
+        // Verify the Google token
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: process.env.GOOGLE_CLIENT_ID
+        });
+
+        const payload = ticket.getPayload();
+        const googleId = payload.sub;
+        const email = payload.email;
+        const name = payload.name;
+        const avatar = payload.picture;
+
+        // Check if user already exists
+        let user = await User.findOne({ 
+            $or: [{ email }, { googleId }] 
+        });
+
+        if (user) {
+            // Update existing user with Google info if not already set
+            if (!user.googleId) {
+                user.googleId = googleId;
+                user.avatar = avatar;
+                await user.save();
+            }
+        } else {
+            // Create new user
+            user = await User.create({
+                name,
+                email,
+                googleId,
+                avatar,
+                isActive: true
+            });
+        }
+
+        sendTokenResponse(user, 200, res);
+    } catch (error) {
+        console.error('Google Auth Error:', error);
+        res.status(400).json({
+            success: false,
+            message: 'Google authentication failed',
+            error: error.message
+        });
+    }
 };
