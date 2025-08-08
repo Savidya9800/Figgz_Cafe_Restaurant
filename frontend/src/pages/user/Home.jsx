@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Select } from "../../components/ui/shadcn/Select";
+import { DatePickerDemo } from "../../components/ui/shadcn/DatePicker";
+import { useAuth } from "../../contexts/AuthContext";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import Navigation from "../../components/Nav";
@@ -6,6 +9,108 @@ import Footer from "../../components/Footer";
 import { BackgroundBeamsWithCollision } from "../../components/ui/aceternity/background-beams-with-collision";
 
 function Home() {
+  const { user } = useAuth();
+  // Reservation form state and validation
+  const [reservation, setReservation] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    date: "",
+    time: "",
+    persons: "",
+    note: "",
+  });
+  const [reservationErrors, setReservationErrors] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    date: "",
+    time: "",
+    persons: "",
+    note: "",
+  });
+
+  // Autofill if user is logged in
+  useEffect(() => {
+    if (user) {
+      setReservation((prev) => ({
+        ...prev,
+        name: user.name || "",
+        email: user.email || "",
+        phone: user.phone || "",
+      }));
+    }
+  }, [user]);
+
+  // Validation functions
+  const validateName = (name) => {
+    if (!name) return "Name is required";
+    if (!/^[A-Za-z\s]{2,}$/.test(name))
+      return "Enter a valid name (letters only, min 2 chars)";
+    return "";
+  };
+  const validateEmail = (email) => {
+    if (!email) return "Email is required";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+      return "Enter a valid email address";
+    return "";
+  };
+  const validatePhone = (phone) => {
+    if (!phone) return "Phone is required";
+    if (!/^\d+$/.test(phone)) return "Phone number must contain only numbers";
+    return "";
+  };
+  const validateDate = (date) => {
+    if (!date || typeof date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return "Date is required";
+    const today = new Date().toISOString().split("T")[0];
+    if (date < today) return "Date cannot be in the past";
+    return "";
+  };
+  const validateTime = (time) => (!time ? "Time is required" : "");
+  const validatePersons = (persons) =>
+    !persons ? "Select number of persons" : "";
+  const validateNote = (note) => {
+    if (!note) return "";
+    const wordCount = note.trim().split(/\s+/).filter(Boolean).length;
+    if (wordCount < 3) return "Note must be at least 3 words";
+    if (wordCount > 50) return "Note must be 50 words or less";
+    return "";
+  };
+
+  const handleReservationChange = (e) => {
+    const { name, value } = e.target;
+    let newValue = value;
+    if (name === "phone") newValue = value.replace(/[^\d]/g, "");
+    setReservation((prev) => ({ ...prev, [name]: newValue }));
+    // Real-time validation
+    let errorMsg = "";
+    if (name === "name") errorMsg = validateName(newValue);
+    if (name === "email") errorMsg = validateEmail(newValue);
+    if (name === "phone") errorMsg = validatePhone(newValue);
+    if (name === "date") errorMsg = validateDate(newValue);
+    if (name === "time") errorMsg = validateTime(newValue);
+    if (name === "persons") errorMsg = validatePersons(newValue);
+    if (name === "note") errorMsg = validateNote(newValue);
+    setReservationErrors((prev) => ({ ...prev, [name]: errorMsg }));
+  };
+
+  const handleReservationSubmit = (e) => {
+    e.preventDefault();
+    // Validate all fields
+    const errors = {
+      name: validateName(reservation.name),
+      email: validateEmail(reservation.email),
+      phone: validatePhone(reservation.phone),
+      date: validateDate(reservation.date),
+      time: validateTime(reservation.time),
+      persons: validatePersons(reservation.persons),
+      note: validateNote(reservation.note),
+    };
+    setReservationErrors(errors);
+    if (Object.values(errors).some((msg) => msg)) return;
+    // Submit reservation logic here
+    // ...
+  };
   const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const heroImages = [
@@ -735,7 +840,7 @@ function Home() {
               <motion.button
                 whileHover={{ scale: 1.05, y: -1 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => navigate('menu/taringa')}
+                onClick={() => navigate("menu/taringa")}
                 className="flex items-center gap-3 text-figgz-primary font-semibold px-4 py-2 rounded-lg hover:bg-figgz-primary/10 transition-all duration-300 text-lg cursor-pointer"
               >
                 <span className="w-3 h-3 bg-figgz-primary rounded-full"></span>
@@ -1005,7 +1110,7 @@ function Home() {
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => navigate('/menu/taringa')}
+              onClick={() => navigate("/menu/taringa")}
               className="bg-figgz-primary text-white px-12 py-4 rounded-full font-semibold text-lg shadow-2xl hover:shadow-figgz-primary/25 transition-all duration-300 inline-flex items-center gap-3 cursor-pointer"
             >
               View Full Menu
@@ -1161,7 +1266,14 @@ function Home() {
 
                   {/* Testimonial Text */}
                   <p className="text-figgz-paragraph text-lg leading-relaxed mb-8">
-                    "An exceptional new cafe with excellent coffee and delicious food. Be sure to check out this new place and support a local business! Ignore the one star reviews as it’s obvious that you can’t please everyone I know for a fact if they had of spoken to the owners they would have addresses their concerns. Coffee is amazing every time I have had it and I’m fussy! Try the bacon and egg wrap very yummy and at a great price too!"
+                    "An exceptional new cafe with excellent coffee and delicious
+                    food. Be sure to check out this new place and support a
+                    local business! Ignore the one star reviews as it’s obvious
+                    that you can’t please everyone I know for a fact if they had
+                    of spoken to the owners they would have addresses their
+                    concerns. Coffee is amazing every time I have had it and I’m
+                    fussy! Try the bacon and egg wrap very yummy and at a great
+                    price too!"
                   </p>
 
                   {/* Customer Info */}
@@ -1229,7 +1341,13 @@ function Home() {
 
                   {/* Testimonial Text */}
                   <p className="text-figgz-paragraph text-lg leading-relaxed mb-8">
-                    "The food at Figgz, was absolutely amazing. It's become increasingly hard to find brewers of decent tea and these guys nailed it. It was brewed beautifully in a pot with tea leaves and the taste was amazing. The staff were so kind and well-mannered, and the atmosphere was lovely. I will add this to one of my favorite places to wait for appointments or catch up on some work. Very grateful for the experience."
+                    "The food at Figgz, was absolutely amazing. It's become
+                    increasingly hard to find brewers of decent tea and these
+                    guys nailed it. It was brewed beautifully in a pot with tea
+                    leaves and the taste was amazing. The staff were so kind and
+                    well-mannered, and the atmosphere was lovely. I will add
+                    this to one of my favorite places to wait for appointments
+                    or catch up on some work. Very grateful for the experience."
                   </p>
 
                   {/* Customer Info */}
@@ -1297,7 +1415,11 @@ function Home() {
 
                   {/* Testimonial Text */}
                   <p className="text-figgz-paragraph text-lg leading-relaxed mb-8">
-                    "Very cute little cafe. My partner got a coffee and they gave him a little bit of cake for free on top as a sample. He loves the coffe and cake and we have been going ever since! I have tried the smoothies which were amazing and the egg and bacon wrap. Definitely recommend!"
+                    "Very cute little cafe. My partner got a coffee and they
+                    gave him a little bit of cake for free on top as a sample.
+                    He loves the coffe and cake and we have been going ever
+                    since! I have tried the smoothies which were amazing and the
+                    egg and bacon wrap. Definitely recommend!"
                   </p>
 
                   {/* Customer Info */}
@@ -1365,7 +1487,11 @@ function Home() {
 
                   {/* Testimonial Text */}
                   <p className="text-figgz-paragraph text-lg leading-relaxed mb-8">
-                    "I rarely ever share Google Reviews but I felt like I had to leave a review for Figgz. Every time I go to Figgz I’m impressed with the fresh, healthy and delicious food. Figgz has become a happy place for me to pop in for lunch both to dine in and take away. Highly recommend."
+                    "I rarely ever share Google Reviews but I felt like I had to
+                    leave a review for Figgz. Every time I go to Figgz I’m
+                    impressed with the fresh, healthy and delicious food. Figgz
+                    has become a happy place for me to pop in for lunch both to
+                    dine in and take away. Highly recommend."
                   </p>
 
                   {/* Customer Info */}
@@ -1574,7 +1700,7 @@ function Home() {
               <div className="absolute inset-0 bg-gradient-to-br from-figgz-primary/3 to-transparent opacity-50"></div>
 
               <div className="relative z-10">
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleReservationSubmit}>
                   {/* First Row - Name and Persons */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
@@ -1583,30 +1709,43 @@ function Home() {
                       </label>
                       <input
                         type="text"
+                        name="name"
+                        value={reservation.name}
+                        onChange={handleReservationChange}
                         placeholder="Your full name"
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-figgz-primary/50 focus:border-figgz-primary transition-all duration-300 bg-gray-50/50"
+                        className={`w-full px-4 py-3 border ${
+                          reservationErrors.name
+                            ? "border-red-400"
+                            : "border-gray-200"
+                        } rounded-lg focus:outline-none focus:ring-2 focus:ring-figgz-primary/50 focus:border-figgz-primary transition-all duration-300 bg-gray-50/50`}
                         required
                       />
+                      {reservationErrors.name && (
+                        <p className="text-xs text-red-600 mt-1">
+                          {reservationErrors.name}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-2">
                       <label className="text-sm font-semibold text-figgz-secondary flex items-center gap-2">
                         Persons <span className="text-figgz-primary">*</span>
                       </label>
-                      <select
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-figgz-primary/50 focus:border-figgz-primary transition-all duration-300 bg-gray-50/50"
-                        required
-                      >
-                        <option value="">Select persons</option>
-                        <option value="1">1 Person</option>
-                        <option value="2">2 Persons</option>
-                        <option value="3">3 Persons</option>
-                        <option value="4">4 Persons</option>
-                        <option value="5">5 Persons</option>
-                        <option value="6">6 Persons</option>
-                        <option value="7">7 Persons</option>
-                        <option value="8">8+ Persons</option>
-                      </select>
+                      <Select
+                        name="persons"
+                        value={reservation.persons}
+                        onChange={handleReservationChange}
+                        options={[
+                          { value: '', label: 'Select persons' },
+                          { value: '1', label: '1 Person' },
+                          { value: '2', label: '2 Persons' },
+                          { value: '3', label: '3 Persons' },
+                          { value: '4', label: '4 Persons' },
+                          { value: '5', label: '5+ Persons' },
+                        ]}
+                        placeholder="Select persons"
+                        error={reservationErrors.persons}
+                      />
                     </div>
                   </div>
 
@@ -1616,38 +1755,54 @@ function Home() {
                       <label className="text-sm font-semibold text-figgz-secondary flex items-center gap-2">
                         Date <span className="text-figgz-primary">*</span>
                       </label>
-                      <input
-                        type="date"
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-figgz-primary/50 focus:border-figgz-primary transition-all duration-300 bg-gray-50/50"
-                        required
+                      <DatePickerDemo
+                        value={reservation.date}
+                        onChange={(date) => {
+                          handleReservationChange({
+                            target: {
+                              name: "date",
+                              value: date || "",
+                            },
+                          });
+                        }}
+                        error={reservationErrors.date}
                       />
+                      {reservationErrors.date && (
+                        <p className="text-xs text-red-600 mt-1">
+                          {reservationErrors.date}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-2">
                       <label className="text-sm font-semibold text-figgz-secondary flex items-center gap-2">
                         Time <span className="text-figgz-primary">*</span>
                       </label>
-                      <select
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-figgz-primary/50 focus:border-figgz-primary transition-all duration-300 bg-gray-50/50"
-                        required
-                      >
-                        <option value="">Select time</option>
-                        <option value="11:00">11:00 AM</option>
-                        <option value="11:30">11:30 AM</option>
-                        <option value="12:00">12:00 PM</option>
-                        <option value="12:30">12:30 PM</option>
-                        <option value="13:00">1:00 PM</option>
-                        <option value="13:30">1:30 PM</option>
-                        <option value="14:00">2:00 PM</option>
-                        <option value="14:30">2:30 PM</option>
-                        <option value="18:00">6:00 PM</option>
-                        <option value="18:30">6:30 PM</option>
-                        <option value="19:00">7:00 PM</option>
-                        <option value="19:30">7:30 PM</option>
-                        <option value="20:00">8:00 PM</option>
-                        <option value="20:30">8:30 PM</option>
-                        <option value="21:00">9:00 PM</option>
-                      </select>
+                      <Select
+                        name="time"
+                        value={reservation.time}
+                        onChange={handleReservationChange}
+                        options={[
+                          { value: '', label: 'Select time' },
+                          { value: '11:00', label: '11:00 AM' },
+                          { value: '11:30', label: '11:30 AM' },
+                          { value: '12:00', label: '12:00 PM' },
+                          { value: '12:30', label: '12:30 PM' },
+                          { value: '13:00', label: '1:00 PM' },
+                          { value: '13:30', label: '1:30 PM' },
+                          { value: '14:00', label: '2:00 PM' },
+                          { value: '14:30', label: '2:30 PM' },
+                          { value: '18:00', label: '6:00 PM' },
+                          { value: '18:30', label: '6:30 PM' },
+                          { value: '19:00', label: '7:00 PM' },
+                          { value: '19:30', label: '7:30 PM' },
+                          { value: '20:00', label: '8:00 PM' },
+                          { value: '20:30', label: '8:30 PM' },
+                          { value: '21:00', label: '9:00 PM' },
+                        ]}
+                        placeholder="Select time"
+                        error={reservationErrors.time}
+                      />
                     </div>
                   </div>
 
@@ -1660,10 +1815,22 @@ function Home() {
                       </label>
                       <input
                         type="email"
+                        name="email"
+                        value={reservation.email}
+                        onChange={handleReservationChange}
                         placeholder="your.email@example.com"
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-figgz-primary/50 focus:border-figgz-primary transition-all duration-300 bg-gray-50/50"
+                        className={`w-full px-4 py-3 border ${
+                          reservationErrors.email
+                            ? "border-red-400"
+                            : "border-gray-200"
+                        } rounded-lg focus:outline-none focus:ring-2 focus:ring-figgz-primary/50 focus:border-figgz-primary transition-all duration-300 bg-gray-50/50`}
                         required
                       />
+                      {reservationErrors.email && (
+                        <p className="text-xs text-red-600 mt-1">
+                          {reservationErrors.email}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-2">
@@ -1673,10 +1840,22 @@ function Home() {
                       </label>
                       <input
                         type="tel"
-                        placeholder="+1 (555) 123-4567"
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-figgz-primary/50 focus:border-figgz-primary transition-all duration-300 bg-gray-50/50"
+                        name="phone"
+                        value={reservation.phone}
+                        onChange={handleReservationChange}
+                        placeholder="Enter your phone number"
+                        className={`w-full px-4 py-3 border ${
+                          reservationErrors.phone
+                            ? "border-red-400"
+                            : "border-gray-200"
+                        } rounded-lg focus:outline-none focus:ring-2 focus:ring-figgz-primary/50 focus:border-figgz-primary transition-all duration-300 bg-gray-50/50`}
                         required
                       />
+                      {reservationErrors.phone && (
+                        <p className="text-xs text-red-600 mt-1">
+                          {reservationErrors.phone}
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -1686,11 +1865,26 @@ function Home() {
                       Your Note <span className="text-figgz-primary">*</span>
                     </label>
                     <textarea
+                      name="note"
+                      value={reservation.note}
+                      onChange={handleReservationChange}
                       placeholder="Special requests, dietary restrictions, or any other notes..."
                       rows={4}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-figgz-primary/50 focus:border-figgz-primary transition-all duration-300 bg-gray-50/50 resize-none"
-                      required
+                      className={`w-full px-4 py-3 border ${
+                        reservationErrors.note
+                          ? "border-red-400"
+                          : "border-gray-200"
+                      } rounded-lg focus:outline-none focus:ring-2 focus:ring-figgz-primary/50 focus:border-figgz-primary transition-all duration-300 bg-gray-50/50 resize-none`}
+                      // not required
                     />
+                    <div className="flex justify-between text-xs mt-1">
+                      <span className={reservation.note.trim().split(/\s+/).filter(Boolean).length > 50 ? "text-red-600" : "text-gray-400"}>
+                        {reservation.note.trim().split(/\s+/).filter(Boolean).length} / 50 words
+                      </span>
+                      {reservationErrors.note && (
+                        <span className="text-red-600">{reservationErrors.note}</span>
+                      )}
+                    </div>
                   </div>
 
                   {/* Submit Button */}

@@ -48,7 +48,7 @@ const userSchema = new mongoose.Schema({
         zipCode: String,
         country: {
             type: String,
-            default: 'USA'
+            default: 'AUS'
         }
     },
     birthday: {

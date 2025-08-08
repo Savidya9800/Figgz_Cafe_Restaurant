@@ -12,22 +12,83 @@ const LoginModal = ({ isOpen, onClose, onSignInSuccess }) => {
         password: '',
         phone: ''
     });
+    const [formErrors, setFormErrors] = useState({
+        name: '',
+        email: '',
+        password: '',
+        phone: ''
+    });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
+
+    // Validation functions
+    const validateName = (name) => {
+        if (!name) return 'Name is required';
+        if (!/^[A-Za-z\s]{2,}$/.test(name)) return 'Enter a valid name (letters only, min 2 chars)';
+        return '';
+    };
+    const validateEmail = (email) => {
+        if (!email) return 'Email is required';
+        // Simple email regex
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Enter a valid email address';
+        return '';
+    };
+    const validatePassword = (password) => {
+        if (!password) return 'Password is required';
+        if (password.length < 5) return 'Password must be at least 5 characters';
+        return '';
+    };
+    const validatePhone = (phone) => {
+        if (!phone) return '';
+        if (!/^\d+$/.test(phone)) return 'Phone number must contain only numbers';
+        return '';
+    };
+
     const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        let newValue = value;
+        // For phone, allow only numbers
+        if (name === 'phone') {
+            newValue = value.replace(/[^\d]/g, '');
+        }
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [name]: newValue
         });
         setError('');
+
+        // Real-time validation
+        let errorMsg = '';
+        if (name === 'name') errorMsg = validateName(newValue);
+        if (name === 'email') errorMsg = validateEmail(newValue);
+        if (name === 'password') errorMsg = validatePassword(newValue);
+        if (name === 'phone') errorMsg = validatePhone(newValue);
+        setFormErrors({
+            ...formErrors,
+            [name]: errorMsg
+        });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
         setError('');
 
+        // Validate all fields before submit
+        let errors = { ...formErrors };
+        if (!isLoginMode) {
+            errors.name = validateName(formData.name);
+            errors.phone = validatePhone(formData.phone);
+        }
+        errors.email = validateEmail(formData.email);
+        errors.password = validatePassword(formData.password);
+        setFormErrors(errors);
+
+        // If any error exists, prevent submit
+        const hasError = Object.values(errors).some((msg) => msg);
+        if (hasError) return;
+
+        setLoading(true);
         try {
             const endpoint = isLoginMode ? '/api/auth/login' : '/api/auth/register';
             const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${endpoint}`, {
@@ -44,6 +105,7 @@ const LoginModal = ({ isOpen, onClose, onSignInSuccess }) => {
                 login(data.user, data.token);
                 onClose();
                 setFormData({ name: '', email: '', password: '', phone: '' });
+                setFormErrors({ name: '', email: '', password: '', phone: '' });
                 if (onSignInSuccess) onSignInSuccess();
             } else {
                 setError(data.message || 'Authentication failed');
@@ -68,6 +130,7 @@ const LoginModal = ({ isOpen, onClose, onSignInSuccess }) => {
         setIsLoginMode(!isLoginMode);
         setError('');
         setFormData({ name: '', email: '', password: '', phone: '' });
+        setFormErrors({ name: '', email: '', password: '', phone: '' });
     };
 
     if (!isOpen) return null;
@@ -148,9 +211,10 @@ const LoginModal = ({ isOpen, onClose, onSignInSuccess }) => {
                                             value={formData.name}
                                             onChange={handleInputChange}
                                             required={!isLoginMode}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                            className={`w-full px-3 py-2 border ${formErrors.name ? 'border-red-400' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
                                             placeholder="Enter your full name"
                                         />
+                                        {formErrors.name && <p className="text-xs text-red-600 mt-1">{formErrors.name}</p>}
                                     </div>
                                 )}
 
@@ -164,9 +228,10 @@ const LoginModal = ({ isOpen, onClose, onSignInSuccess }) => {
                                         value={formData.email}
                                         onChange={handleInputChange}
                                         required
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                        className={`w-full px-3 py-2 border ${formErrors.email ? 'border-red-400' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
                                         placeholder="Enter your email"
                                     />
+                                    {formErrors.email && <p className="text-xs text-red-600 mt-1">{formErrors.email}</p>}
                                 </div>
 
                                 <div>
@@ -179,10 +244,11 @@ const LoginModal = ({ isOpen, onClose, onSignInSuccess }) => {
                                         value={formData.password}
                                         onChange={handleInputChange}
                                         required
-                                        minLength={6}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                        minLength={5}
+                                        className={`w-full px-3 py-2 border ${formErrors.password ? 'border-red-400' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
                                         placeholder="Enter your password"
                                     />
+                                    {formErrors.password && <p className="text-xs text-red-600 mt-1">{formErrors.password}</p>}
                                 </div>
 
                                 {!isLoginMode && (
@@ -195,9 +261,10 @@ const LoginModal = ({ isOpen, onClose, onSignInSuccess }) => {
                                             name="phone"
                                             value={formData.phone}
                                             onChange={handleInputChange}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                            className={`w-full px-3 py-2 border ${formErrors.phone ? 'border-red-400' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
                                             placeholder="Enter your phone number"
                                         />
+                                        {formErrors.phone && <p className="text-xs text-red-600 mt-1">{formErrors.phone}</p>}
                                     </div>
                                 )}
 

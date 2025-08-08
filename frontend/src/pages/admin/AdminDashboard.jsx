@@ -39,7 +39,7 @@ import {
   FilterList,
   DateRange
 } from '@mui/icons-material';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn/card';
 import StatsCards from '../../components/admin/StatsCards';
 import ChartsSection from '../../components/admin/ChartsSection';
 import CustomerReviews from '../../components/admin/CustomerReviews';

@@ -13,7 +13,7 @@ import {
   AlertDialogDescription,
   AlertDialogAction,
   AlertDialogCancel
-} from "./ui/alert-dialog";
+} from "./ui/shadcn/alert-dialog";
 
 // Simple User Icon Component
 const UserIcon = ({ className }) => (
