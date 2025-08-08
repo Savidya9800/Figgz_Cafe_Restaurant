@@ -16,5 +16,7 @@ router.post('/login', login);
 router.post('/google', googleAuth);
 router.get('/logout', logout);
 router.get('/me', protect, getMe);
+router.put('/me', protect, require('../controllers/authController').updateMe);
+router.delete('/me', protect, require('../controllers/authController').deleteMe);
 
 module.exports = router;

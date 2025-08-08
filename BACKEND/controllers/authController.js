@@ -1,3 +1,34 @@
+// @desc    Delete current logged in user
+// @route   DELETE /api/auth/me
+// @access  Private
+exports.deleteMe = async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.user.id);
+        res.status(200).json({ success: true, message: 'Account deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Server Error' });
+    }
+};
+// @desc    Update current logged in user
+// @route   PUT /api/auth/me
+// @access  Private
+exports.updateMe = async (req, res) => {
+    try {
+        const updates = req.body;
+        // Only allow certain fields to be updated
+        const allowedFields = ['name', 'email', 'phone', 'address', 'birthday', 'favoriteFood', 'avatar'];
+        const filteredUpdates = {};
+        for (const key of allowedFields) {
+            if (updates[key] !== undefined) filteredUpdates[key] = updates[key];
+        }
+        const user = await User.findByIdAndUpdate(req.user.id, filteredUpdates, { new: true });
+        res.status(200).json({ success: true, data: user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Server Error' });
+    }
+};
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const { OAuth2Client } = require('google-auth-library');

@@ -51,6 +51,12 @@ const userSchema = new mongoose.Schema({
             default: 'USA'
         }
     },
+    birthday: {
+        type: String
+    },
+    favoriteFood: {
+        type: String
+    },
     isActive: {
         type: Boolean,
         default: true

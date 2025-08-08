@@ -1,7 +1,7 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const dotenv = require('dotenv');
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const dotenv = require("dotenv");
 
 // Load environment variables
 dotenv.config();
@@ -9,34 +9,31 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors({
-    origin: [
-        process.env.CLIENT_URL || 'http://localhost:5173',
-        'http://localhost:5173',
-        'http://127.0.0.1:5173',
-        'http://localhost:3000'
-    ],
+app.use(
+  cors({
+    origin: [process.env.CLIENT_URL || "http://localhost:5173"],
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Static files
-app.use('/uploads', express.static('public/uploads'));
+app.use("/uploads", express.static("public/uploads"));
 
 // Routes
-app.get('/', (req, res) => {
-    res.json({
-        message: 'Welcome to Figgz Cafe Restaurant API',
-        version: '1.0.0',
-        status: 'Running'
-    });
+app.get("/", (req, res) => {
+  res.json({
+    message: "Welcome to Figgz Cafe Restaurant API",
+    version: "1.0.0",
+    status: "Running",
+  });
 });
 
 // API Routes (we'll add these later)
-app.use('/api/auth', require('./routes/auth'));
+app.use("/api/auth", require("./routes/auth"));
 // app.use('/api/users', require('./routes/users'));
 // app.use('/api/menu', require('./routes/menu'));
 // app.use('/api/orders', require('./routes/orders'));
@@ -44,29 +41,29 @@ app.use('/api/auth', require('./routes/auth'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({
-        message: 'Something went wrong!',
-        error: process.env.NODE_ENV === 'production' ? {} : err.stack
-    });
+  console.error(err.stack);
+  res.status(500).json({
+    message: "Something went wrong!",
+    error: process.env.NODE_ENV === "production" ? {} : err.stack,
+  });
 });
 
 // 404 handler
-app.use('*', (req, res) => {
-    res.status(404).json({
-        message: 'Route not found'
-    });
+app.use("*", (req, res) => {
+  res.status(404).json({
+    message: "Route not found",
+  });
 });
 
 // Database connection
 const connectDB = async () => {
-    try {
-        const conn = await mongoose.connect(process.env.MONGO_URI);
-        console.log(`MongoDB Connected`);
-    } catch (error) {
-        console.error('Database connection error:', error);
-        process.exit(1);
-    }
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+    console.log(`MongoDB Connected`);
+  } catch (error) {
+    console.error("Database connection error:", error);
+    process.exit(1);
+  }
 };
 
 // Connect to database
@@ -75,7 +72,7 @@ connectDB();
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
 });
 
 module.exports = app;

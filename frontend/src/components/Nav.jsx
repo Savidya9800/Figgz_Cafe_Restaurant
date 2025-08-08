@@ -3,6 +3,17 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import LoginModal from "./LoginModal";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogAction,
+  AlertDialogCancel
+} from "./ui/alert-dialog";
 
 // Simple User Icon Component
 const UserIcon = ({ className }) => (
@@ -27,6 +38,8 @@ function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const [showSignOutSuccess, setShowSignOutSuccess] = useState(false);
+  const [showSignInSuccess, setShowSignInSuccess] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout, isAuthenticated } = useAuth();
@@ -436,15 +449,47 @@ function Navigation() {
                           >
                             My Orders
                           </button>
-                          <button
-                            onClick={() => {
-                              logout();
-                              setShowUserDropdown(false);
-                            }}
-                            className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
-                          >
-                            Sign Out
-                          </button>
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <button
+                                className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                              >
+                                Sign Out
+                              </button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>Sign Out</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  Are you sure you want to sign out?
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction asChild>
+                                  <button
+                                    onClick={async () => {
+                                      try {
+                                        await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/logout`, {
+                                          headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                                        });
+                                      } catch (e) {}
+                                      logout();
+                                      setShowUserDropdown(false); // Only close dropdown after sign out
+                                      setShowSignOutSuccess(true);
+                                      setTimeout(() => {
+                                        setShowSignOutSuccess(false);
+                                        navigate("/");
+                                        window.scrollTo({ top: 0, behavior: "smooth" });
+                                      }, 1200);
+                                    }}
+                                  >
+                                    Yes, Sign Out
+                                  </button>
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -680,8 +725,50 @@ function Navigation() {
       {/* Login Modal */}
       <LoginModal 
         isOpen={isLoginModalOpen} 
-        onClose={() => setIsLoginModalOpen(false)} 
+        onClose={() => setIsLoginModalOpen(false)}
+        onSignInSuccess={() => {
+          setShowSignInSuccess(true);
+          setTimeout(() => setShowSignInSuccess(false), 1500);
+        }}
       />
+
+      {/* Sign Out Success Alert - Moved outside the dropdown */}
+      <AnimatePresence>
+        {showSignOutSuccess && (
+          <motion.div
+            className="fixed top-8 left-1/2 transform -translate-x-1/2 flex items-center gap-3 border border-green-600 bg-white text-green-800 px-6 py-3 rounded-lg shadow-lg z-50"
+            style={{ minWidth: 320 }}
+            initial={{ opacity: 0, y: -40, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 28, duration: 0.5 }}
+          >
+            <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span className="font-medium">Signed out successfully!</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Sign In Success Alert */}
+      <AnimatePresence>
+        {showSignInSuccess && (
+          <motion.div
+            className="fixed top-8 left-1/2 transform -translate-x-1/2 flex items-center gap-3 border border-green-600 bg-white text-green-800 px-6 py-3 rounded-lg shadow-lg z-50"
+            style={{ minWidth: 320 }}
+            initial={{ opacity: 0, y: -40, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 28, duration: 0.5 }}
+          >
+            <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span className="font-medium">Signed in successfully!</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
