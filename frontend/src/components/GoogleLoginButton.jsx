@@ -20,7 +20,7 @@ const GoogleLoginButton = ({ onSuccess, onError, className = '' }) => {
                         callback: handleCredentialResponse,
                         auto_select: false,
                         cancel_on_tap_outside: true,
-                        use_fedcm_for_prompt: false
+                        use_fedcm_for_prompt: true // Opt-in to FedCM as recommended
                     });
                 } catch (error) {
                     console.error('Google OAuth initialization error:', error);
@@ -56,19 +56,29 @@ const GoogleLoginButton = ({ onSuccess, onError, className = '' }) => {
     const handleGoogleLogin = () => {
         try {
             if (window.google && window.google.accounts) {
-                // Check if the client ID is properly configured
                 if (!import.meta.env.VITE_GOOGLE_CLIENT_ID) {
                     console.error('Google Client ID not configured');
                     onError?.('Google authentication is not properly configured');
                     return;
                 }
-                
                 window.google.accounts.id.prompt((notification) => {
-                    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-                        console.log('Google sign-in prompt was not displayed or skipped');
-                        // Fallback to disabling auto-select and trying again
-                        window.google.accounts.id.disableAutoSelect();
-                        window.google.accounts.id.prompt();
+                    // Modernized: Use recommended FedCM-safe checks
+                    if (notification.getMomentType) {
+                        const momentType = notification.getMomentType();
+                        if (momentType === 'skipped') {
+                            console.log('Google sign-in prompt was skipped');
+                        } else if (momentType === 'dismissed') {
+                            console.log('Google sign-in prompt was dismissed');
+                        } else if (momentType === 'displayed') {
+                            console.log('Google sign-in prompt was displayed');
+                        }
+                    } else {
+                        // Fallback for older API
+                        if (notification.isNotDisplayed && notification.isNotDisplayed()) {
+                            console.log('Google sign-in prompt was not displayed');
+                        } else if (notification.isSkippedMoment && notification.isSkippedMoment()) {
+                            console.log('Google sign-in prompt was skipped');
+                        }
                     }
                 });
             } else {

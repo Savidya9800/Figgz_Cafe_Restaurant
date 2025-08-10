@@ -198,7 +198,13 @@ function TaringaMenu() {
           {/* Back Button - Hidden on mobile */}
           <motion.button
             className="hidden sm:flex absolute top-6 left-4 sm:top-8 sm:left-8 items-center space-x-2 text-white hover:text-white transition-all duration-300 z-20 bg-gradient-to-r from-[#CB3A1A]/80 to-orange-600/80 backdrop-blur-sm px-3 py-2 sm:px-4 sm:py-2 rounded-full shadow-lg hover:shadow-xl border border-white/20"
-            onClick={() => navigate('/order')}
+            onClick={() => {
+              navigate('/order');
+              setTimeout(() => {
+                const el = document.getElementById('locations');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }, 300);
+            }}
             whileHover={{ 
               scale: 1.05,
               boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2)",
@@ -234,21 +240,6 @@ function TaringaMenu() {
             />
           </motion.button>
 
-          {/* Cart Button */}
-          <motion.div
-            className="absolute top-6 right-4 sm:top-8 sm:right-8"
-            whileHover={{ scale: 1.05 }}
-          >
-            <IconButton
-              onClick={() => setShowCart(!showCart)}
-              className="bg-[#CB3A1A] text-white hover:bg-[#B02E15]"
-              size="small"
-            >
-              <Badge badgeContent={getTotalItems()} color="error">
-                <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6" />
-              </Badge>
-            </IconButton>
-          </motion.div>
 
           <motion.div
             initial={{ y: 50, opacity: 0 }}
@@ -304,21 +295,71 @@ function TaringaMenu() {
       >
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex flex-col gap-3 sm:gap-4 items-center justify-between">
-            {/* Search Bar */}
-            <div className="relative w-full max-w-sm sm:max-w-md">
+            {/* Search Bar (mobile only, above row) */}
+            <div className="relative w-full max-w-sm sm:hidden mb-2">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
               <input
                 type="text"
                 placeholder="Search items..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 sm:pl-10 pr-4 py-2 sm:py-2.5 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#CB3A1A] focus:border-transparent text-sm sm:text-base"
+                className="w-full pl-9 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#CB3A1A] focus:border-transparent text-sm"
               />
             </div>
 
-            {/* Category Filters */}
-            <div className="flex space-x-1 sm:space-x-2 flex-wrap justify-center w-full overflow-x-auto scrollbar-hide">
-              <div className="flex space-x-1 sm:space-x-2 min-w-max px-2 sm:px-0">
+            {/* Mobile: Dropdown for categories, dietary filter, and cart icon (BowenHills style) */}
+            <div className="flex w-full items-center justify-between gap-2 sm:hidden mb-2">
+              <select
+                value={selectedCategory}
+                onChange={e => setSelectedCategory(e.target.value)}
+                className="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB3A1A] text-xs max-w-[60%]"
+              >
+                {taringaMenuData.categories.map(category => (
+                  <option key={category.id} value={category.id}>{category.name}</option>
+                ))}
+              </select>
+              <div className="flex items-center space-x-2 ml-2 flex-shrink-0">
+                <Filter className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                <select
+                  value={filterDietary}
+                  onChange={(e) => setFilterDietary(e.target.value)}
+                  className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB3A1A] text-xs max-w-xs"
+                >
+                  <option value="all">All Items</option>
+                  <option value="vegetarian">Vegetarian</option>
+                  <option value="vegan">Vegan</option>
+                  <option value="gluten-free">Gluten Free</option>
+                </select>
+              </div>
+              {/* Cart Icon (mobile, styled as BowenHills) */}
+              <div className="ml-2 flex items-center">
+                <IconButton
+                  onClick={() => setShowCart(true)}
+                  aria-label="View cart"
+                  sx={{ backgroundColor: '#CB3A1A', borderRadius: '50%', boxShadow: 2, p: 1, '&:hover': { backgroundColor: '#b32f13' } }}
+                >
+                  <Badge badgeContent={getTotalItems()} color="error" overlap="circular" sx={{ '& .MuiBadge-badge': { fontSize: '0.75rem', minWidth: 18, height: 18 } }}>
+                    <ShoppingCart className="w-6 h-6 text-white" />
+                  </Badge>
+                </IconButton>
+              </div>
+            </div>
+            {/* Desktop/Tablet: Search + Category row + Dietary filter */}
+            <div className="hidden sm:flex w-full items-center relative overflow-x-auto scrollbar-hide" style={{ minHeight: 56 }}>
+              {/* Search bar left */}
+              <div className="relative flex-shrink-0" style={{ width: 240 }}>
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Search items..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#CB3A1A] focus:border-transparent text-base"
+                  style={{ minWidth: 180 }}
+                />
+              </div>
+              {/* Category buttons centered */}
+              <div className="flex space-x-1 sm:space-x-2 min-w-max px-2 sm:px-0 mx-auto" style={{ position: 'relative', left: 0, right: 0 }}>
                 {taringaMenuData.categories.map((category) => (
                   <motion.button
                     key={category.id}
@@ -335,21 +376,32 @@ function TaringaMenu() {
                   </motion.button>
                 ))}
               </div>
-            </div>
-
-            {/* Dietary Filter */}
-            <div className="flex items-center space-x-2 w-full justify-center">
-              <Filter className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 flex-shrink-0" />
-              <select
-                value={filterDietary}
-                onChange={(e) => setFilterDietary(e.target.value)}
-                className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB3A1A] text-xs sm:text-base max-w-xs"
-              >
-                <option value="all">All Items</option>
-                <option value="vegetarian">Vegetarian</option>
-                <option value="vegan">Vegan</option>
-                <option value="gluten-free">Gluten Free</option>
-              </select>
+              {/* Dietary Filter and Cart Icon absolutely right-aligned (BowenHills style) */}
+              <div className="flex items-center space-x-2 flex-shrink-0" style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)' }}>
+                <Filter className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 flex-shrink-0" />
+                <select
+                  value={filterDietary}
+                  onChange={(e) => setFilterDietary(e.target.value)}
+                  className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB3A1A] text-xs sm:text-base max-w-xs"
+                >
+                  <option value="all">All Items</option>
+                  <option value="vegetarian">Vegetarian</option>
+                  <option value="vegan">Vegan</option>
+                  <option value="gluten-free">Gluten Free</option>
+                </select>
+                {/* Cart Icon (desktop/tablet, styled as BowenHills) */}
+                <div className="ml-2 flex items-center">
+                  <IconButton
+                    onClick={() => setShowCart(true)}
+                    aria-label="View cart"
+                    sx={{ backgroundColor: '#CB3A1A', borderRadius: '50%', boxShadow: 2, p: 1, '&:hover': { backgroundColor: '#b32f13' } }}
+                  >
+                    <Badge badgeContent={getTotalItems()} color="error" overlap="circular" sx={{ '& .MuiBadge-badge': { fontSize: '0.75rem', minWidth: 18, height: 18 } }}>
+                      <ShoppingCart className="w-6 h-6 text-white" />
+                    </Badge>
+                  </IconButton>
+                </div>
+              </div>
             </div>
           </div>
         </div>

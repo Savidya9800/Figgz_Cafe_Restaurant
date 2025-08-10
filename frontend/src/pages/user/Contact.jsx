@@ -276,8 +276,9 @@ function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-[#111111] mb-1">Opening Time</h3>
-                      <p className="text-[#74787C] text-sm mb-1">7:30am - 3pm ( Mon - Fri )</p>
-                      <p className="text-[#CB3A1A] text-sm font-medium">Sat, Sun & Holiday Closed</p>
+                      <p className="text-[#74787C] text-sm mb-1">7:30am - 3:00pm (Mon - Fri)</p>
+                      <p className="text-[#CB3A1A] text-sm font-medium">Saturday: CLOSED</p>
+                      <p className="text-[#CB3A1A] text-sm font-medium">Sunday: CLOSED</p>
                     </div>
                   </motion.div>
                 </div>
@@ -437,11 +438,11 @@ function Contact() {
                         </div>
                         <div className="flex justify-between">
                           <span className="text-[#74787C]">Wednesday:</span>
-                          <span className="text-[#74787C]">7am-3pm</span>
+                          <span className="text-[#74787C]">7am-2pm</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-[#74787C]">Thursday:</span>
-                          <span className="text-[#74787C]">7am-3pm</span>
+                          <span className="text-[#74787C]">7am-2pm</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-[#74787C]">Friday:</span>
@@ -453,7 +454,7 @@ function Contact() {
                         </div>
                         <div className="flex justify-between">
                           <span className="text-[#74787C]">Sunday:</span>
-                          <span className="text-[#74787C]">7am-3pm</span>
+                          <span className="text-[#74787C]">7am-2pm</span>
                         </div>
                       </div>
                     </div>

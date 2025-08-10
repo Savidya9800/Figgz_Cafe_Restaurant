@@ -22,8 +22,8 @@ function Order() {
       phone: "(07) 3155 3873",
       email: "bowenhills@figgzcafe.com",
       hours: {
-        weekdays: "6:30 AM - 9:30 PM",
-        weekends: "7:30 AM - 10:30 PM"
+        weekdays: "7:30 AM - 3:00 PM",
+        weekends: "CLOSED"
       },
       image: shop01,
       features: ["Dine-in", "Takeaway", "Delivery", "Coffee Bar"],
@@ -38,8 +38,13 @@ function Order() {
       phone: "(07) 3870 4589",
       email: "taringa@figgzcafe.com",
       hours: {
-        weekdays: "7:00 AM - 9:00 PM",
-        weekends: "8:00 AM - 10:00 PM"
+        monday: "CLOSED",
+        tuesday: "CLOSED",
+        wednesday: "7:00 AM - 2:00 PM",
+        thursday: "7:00 AM - 2:00 PM",
+        friday: "7:00 AM - 8:00 PM",
+        saturday: "7:00 AM - 8:00 PM",
+        sunday: "7:00 AM - 2:00 PM"
       },
       image: shop02,
       features: ["Dine-in", "Takeaway", "Delivery", "Catering"],
@@ -332,8 +337,22 @@ function Order() {
                   <div className="flex items-start space-x-2.5 sm:space-x-3 mb-3 sm:mb-4">
                     <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-[#CB3A1A] mt-0.5" />
                     <div>
-                      <p className="text-gray-700 font-medium text-sm sm:text-base">Mon - Fri: {location.hours.weekdays}</p>
-                      <p className="text-gray-700 font-medium text-sm sm:text-base">Sat - Sun: {location.hours.weekends}</p>
+                      {location.name === "TARINGA QLD" ? (
+                        <>
+                          <p className="text-gray-700 font-medium text-sm sm:text-base">Monday: {location.hours.monday}</p>
+                          <p className="text-gray-700 font-medium text-sm sm:text-base">Tuesday: {location.hours.tuesday}</p>
+                          <p className="text-gray-700 font-medium text-sm sm:text-base">Wednesday: {location.hours.wednesday}</p>
+                          <p className="text-gray-700 font-medium text-sm sm:text-base">Thursday: {location.hours.thursday}</p>
+                          <p className="text-gray-700 font-medium text-sm sm:text-base">Friday: {location.hours.friday}</p>
+                          <p className="text-gray-700 font-medium text-sm sm:text-base">Saturday: {location.hours.saturday}</p>
+                          <p className="text-gray-700 font-medium text-sm sm:text-base">Sunday: {location.hours.sunday}</p>
+                        </>
+                      ) : (
+                        <>
+                          <p className="text-gray-700 font-medium text-sm sm:text-base">Mon - Fri: {location.hours.weekdays}</p>
+                          <p className="text-gray-700 font-medium text-sm sm:text-base">Sat - Sun: {location.hours.weekends}</p>
+                        </>
+                      )}
                     </div>
                   </div>
 

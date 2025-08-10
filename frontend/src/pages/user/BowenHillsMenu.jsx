@@ -29,7 +29,11 @@ import {
   Badge,
   Snackbar,
   Alert,
-  Tooltip
+  Tooltip,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl
 } from '@mui/material';
 import { bowenHillsMenuData } from '../../data/bowenHillsMenu';
 
@@ -201,7 +205,13 @@ function BowenHillsMenu() {
           {/* Back Button - Hidden on mobile */}
           <motion.button
             className="hidden sm:flex absolute top-6 left-4 sm:top-8 sm:left-8 items-center space-x-2 text-white hover:text-white transition-all duration-300 z-20 bg-gradient-to-r from-blue-600/80 to-purple-600/80 backdrop-blur-sm px-3 py-2 sm:px-4 sm:py-2 rounded-full shadow-lg hover:shadow-xl border border-white/20"
-            onClick={() => navigate('/order')}
+            onClick={() => {
+              navigate('/order');
+              setTimeout(() => {
+                const el = document.getElementById('locations');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }, 300);
+            }}
             whileHover={{ 
               scale: 1.05,
               boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2)",
@@ -237,21 +247,6 @@ function BowenHillsMenu() {
             />
           </motion.button>
 
-          {/* Cart Button */}
-          <motion.div
-            className="absolute top-6 right-4 sm:top-8 sm:right-8"
-            whileHover={{ scale: 1.05 }}
-          >
-            <IconButton
-              onClick={() => setShowCart(!showCart)}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-purple-600 hover:to-blue-600"
-              size="small"
-            >
-              <Badge badgeContent={getTotalItems()} color="error">
-                <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6" />
-              </Badge>
-            </IconButton>
-          </motion.div>
 
           <motion.div
             initial={{ y: 50, opacity: 0 }}
@@ -307,8 +302,8 @@ function BowenHillsMenu() {
       >
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex flex-col gap-3 sm:gap-4 items-center justify-between">
-            {/* Search Bar */}
-            <div className="relative w-full max-w-sm sm:max-w-md">
+            {/* Search Bar (mobile only, above row) */}
+            <div className="relative w-full max-w-sm sm:hidden mb-4">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
               <input
                 type="text"
@@ -319,9 +314,90 @@ function BowenHillsMenu() {
               />
             </div>
 
-            {/* Category Filters */}
-            <div className="flex space-x-1 sm:space-x-2 flex-wrap justify-center w-full overflow-x-auto scrollbar-hide">
-              <div className="flex space-x-1 sm:space-x-2 min-w-max px-2 sm:px-0">
+            {/* Category Filters + Dietary Filter Row */}
+            {/* Mobile: Dropdown for categories and cart icon */}
+            <div className="flex w-full items-center justify-between gap-2 sm:hidden mb-2">
+              {/* MUI Select for categories */}
+              <FormControl fullWidth size="small" sx={{ maxWidth: '60%' }}>
+                <InputLabel id="category-select-label">Category</InputLabel>
+                <Select
+                  labelId="category-select-label"
+                  id="category-select"
+                  value={selectedCategory}
+                  label="Category"
+                  onChange={e => setSelectedCategory(e.target.value)}
+                  MenuProps={{
+                    PaperProps: {
+                      sx: {
+                        maxHeight: 250,
+                        mt: 1,
+                        borderRadius: 2,
+                        boxShadow: 3
+                      }
+                    }
+                  }}
+                >
+                  {bowenHillsMenuData.categories.map(category => (
+                    <MenuItem key={category.id} value={category.id} sx={{ fontWeight: 500 }}>
+                      {category.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <div className="flex items-center space-x-2 flex-shrink-0">
+                <IconButton
+                  onClick={() => setShowCart(!showCart)}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-purple-600 hover:to-blue-600"
+                  size="small"
+                >
+                  <Badge badgeContent={getTotalItems()} color="error">
+                    <ShoppingCart className="w-5 h-5" />
+                  </Badge>
+                </IconButton>
+              </div>
+              <FormControl size="small" sx={{ ml: 2, minWidth: 110 }}>
+                <InputLabel id="dietary-select-label">All Items</InputLabel>
+                <Select
+                  labelId="dietary-select-label"
+                  id="dietary-select"
+                  value={filterDietary}
+                  label="All Items"
+                  onChange={e => setFilterDietary(e.target.value)}
+                  MenuProps={{
+                    PaperProps: {
+                      sx: {
+                        maxHeight: 250,
+                        mt: 1,
+                        borderRadius: 2,
+                        boxShadow: 3
+                      }
+                    }
+                  }}
+                >
+                  <MenuItem value="all">All Items</MenuItem>
+                  <MenuItem value="vegetarian">Vegetarian</MenuItem>
+                  <MenuItem value="vegan">Vegan</MenuItem>
+                  <MenuItem value="gluten-free">Gluten Free</MenuItem>
+                  <MenuItem value="probiotic">Probiotic</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            {/* Desktop/Tablet: Search + Category row + Dietary filter */}
+            <div className="hidden sm:flex w-full items-center relative overflow-x-auto scrollbar-hide" style={{ minHeight: 56 }}>
+              {/* Search bar left */}
+              <div className="relative flex-shrink-0" style={{ width: 240 }}>
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Search items..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border border-blue-200 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+                  style={{ minWidth: 180 }}
+                />
+              </div>
+              {/* Category buttons centered */}
+              <div className="flex space-x-1 sm:space-x-2 min-w-max px-2 sm:px-0 mx-auto" style={{ position: 'relative', left: 0, right: 0 }}>
                 {bowenHillsMenuData.categories.map((category) => (
                   <motion.button
                     key={category.id}
@@ -338,22 +414,30 @@ function BowenHillsMenu() {
                   </motion.button>
                 ))}
               </div>
-            </div>
-
-            {/* Dietary Filter */}
-            <div className="flex items-center space-x-2 w-full justify-center">
-              <Filter className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 flex-shrink-0" />
-              <select
-                value={filterDietary}
-                onChange={(e) => setFilterDietary(e.target.value)}
-                className="border border-blue-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs sm:text-base max-w-xs"
-              >
-                <option value="all">All Items</option>
-                <option value="vegetarian">Vegetarian</option>
-                <option value="vegan">Vegan</option>
-                <option value="gluten-free">Gluten Free</option>
-                <option value="probiotic">Probiotic</option>
-              </select>
+              {/* Dietary Filter and Cart absolutely right-aligned */}
+              <div className="flex items-center space-x-2 flex-shrink-0" style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)' }}>
+                <Filter className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 flex-shrink-0" />
+                <select
+                  value={filterDietary}
+                  onChange={(e) => setFilterDietary(e.target.value)}
+                  className="border border-blue-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs sm:text-base max-w-xs"
+                >
+                  <option value="all">All Items</option>
+                  <option value="vegetarian">Vegetarian</option>
+                  <option value="vegan">Vegan</option>
+                  <option value="gluten-free">Gluten Free</option>
+                  <option value="probiotic">Probiotic</option>
+                </select>
+                <IconButton
+                  onClick={() => setShowCart(!showCart)}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-purple-600 hover:to-blue-600 ml-2"
+                  size="small"
+                >
+                  <Badge badgeContent={getTotalItems()} color="error">
+                    <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6" />
+                  </Badge>
+                </IconButton>
+              </div>
             </div>
           </div>
         </div>
