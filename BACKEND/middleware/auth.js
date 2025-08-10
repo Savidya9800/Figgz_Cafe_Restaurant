@@ -1,10 +1,14 @@
+// ===================== Imports =====================
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-// Protect routes
+// ===================== Middleware =====================
+
+// @desc    Protect routes (require authentication)
 exports.protect = async (req, res, next) => {
   let token;
 
+  // Get token from Authorization header
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
@@ -23,9 +27,7 @@ exports.protect = async (req, res, next) => {
   try {
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
     req.user = await User.findById(decoded.id);
-
     next();
   } catch (error) {
     return res.status(401).json({
@@ -35,7 +37,7 @@ exports.protect = async (req, res, next) => {
   }
 };
 
-// Grant access to specific roles
+// @desc    Grant access to specific roles
 exports.authorize = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
