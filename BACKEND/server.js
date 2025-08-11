@@ -33,11 +33,12 @@ app.get("/", (req, res) => {
 });
 
 // API Routes (we'll add these later)
+
 app.use("/api/auth", require("./routes/auth"));
+app.use('/api/reservations', require('./routes/reservation'));
 // app.use('/api/users', require('./routes/users'));
 // app.use('/api/menu', require('./routes/menu'));
 // app.use('/api/orders', require('./routes/orders'));
-// app.use('/api/reservations', require('./routes/reservations'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {

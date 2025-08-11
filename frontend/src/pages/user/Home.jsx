@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Select } from "../../components/ui/shadcn/Select";
 import { DatePickerDemo } from "../../components/ui/shadcn/DatePicker";
 import { useAuth } from "../../contexts/AuthContext";
@@ -62,8 +63,6 @@ function Home() {
   };
   const validateDate = (date) => {
     if (!date || typeof date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return "Date is required";
-    const today = new Date().toISOString().split("T")[0];
-    if (date < today) return "Date cannot be in the past";
     return "";
   };
   const validateTime = (time) => (!time ? "Time is required" : "");
@@ -81,22 +80,30 @@ function Home() {
     const { name, value } = e.target;
     let newValue = value;
     if (name === "phone") newValue = value.replace(/[^\d]/g, "");
+    if (name === "date") {
+      if (value instanceof Date && !isNaN(value)) {
+        const year = value.getFullYear();
+        const month = String(value.getMonth() + 1).padStart(2, '0');
+        const day = String(value.getDate()).padStart(2, '0');
+        newValue = `${year}-${month}-${day}`;
+      }
+    }
     setReservation((prev) => ({ ...prev, [name]: newValue }));
     // Real-time validation
     let errorMsg = "";
     if (name === "name") errorMsg = validateName(newValue);
     if (name === "email") errorMsg = validateEmail(newValue);
     if (name === "phone") errorMsg = validatePhone(newValue);
-    if (name === "date") errorMsg = validateDate(newValue);
+  if (name === "date") errorMsg = validateDate(newValue);
     if (name === "time") errorMsg = validateTime(newValue);
     if (name === "persons") errorMsg = validatePersons(newValue);
     if (name === "note") errorMsg = validateNote(newValue);
     setReservationErrors((prev) => ({ ...prev, [name]: errorMsg }));
   };
 
-  const handleReservationSubmit = (e) => {
+  const handleReservationSubmit = async (e) => {
     e.preventDefault();
-    // Validate all fields
+    // Validate all fields (including date)
     const errors = {
       name: validateName(reservation.name),
       email: validateEmail(reservation.email),
@@ -108,9 +115,29 @@ function Home() {
     };
     setReservationErrors(errors);
     if (Object.values(errors).some((msg) => msg)) return;
-    // Submit reservation logic here
-    // ...
+    try {
+      await axios.post(
+        "http://localhost:5000/api/reservations",
+        { ...reservation, persons: Number(reservation.persons) },
+        { withCredentials: true }
+      );
+      alert("Reservation submitted successfully!");
+      setReservation({
+        name: "",
+        email: "",
+        phone: "",
+        date: "",
+        time: "",
+        persons: "",
+        note: "",
+      });
+    } catch (err) {
+      alert(
+        err.response?.data?.error || "Failed to submit reservation. Please try again."
+      );
+    }
   };
+  // (Removed duplicate code)
   const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const heroImages = [
@@ -1756,12 +1783,19 @@ function Home() {
                         Date <span className="text-figgz-primary">*</span>
                       </label>
                       <DatePickerDemo
-                        value={reservation.date}
-                        onChange={(date) => {
+                        value={reservation.date ? new Date(reservation.date) : undefined}
+                        onChange={(dateObj) => {
+                          let formatted = "";
+                          if (dateObj instanceof Date && !isNaN(dateObj)) {
+                            const year = dateObj.getFullYear();
+                            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                            const day = String(dateObj.getDate()).padStart(2, '0');
+                            formatted = `${year}-${month}-${day}`;
+                          }
                           handleReservationChange({
                             target: {
                               name: "date",
-                              value: date || "",
+                              value: formatted,
                             },
                           });
                         }}

@@ -13,9 +13,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/shadcn/popover"
 
-export function DatePickerDemo() {
-  const [date, setDate] = React.useState()
-
+export function DatePickerDemo({ value, onChange, error }) {
   // Get today's date with time set to 00:00:00
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -25,21 +23,21 @@ export function DatePickerDemo() {
       <PopoverTrigger asChild>
         <Button
           variant="outline"
-          data-empty={!date}
-          className="data-[empty=true]:text-muted-foreground w-full justify-start text-left font-normal"
+          data-empty={!value}
+          className={`data-[empty=true]:text-muted-foreground w-full justify-start text-left font-normal ${error ? 'border-red-400' : ''}`}
         >
           <CalendarIcon />
-          {date ? format(date, "PPP") : <span>Pick a date</span>}
+          {value ? format(value, "PPP") : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Calendar
           mode="single"
-          selected={date}
-          onSelect={setDate}
+          selected={value}
+          onSelect={onChange}
           disabled={(date) => date < today}
         />
       </PopoverContent>
     </Popover>
-  )
+  );
 }

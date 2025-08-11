@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import Home from "./pages/user/Home";
-import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminDashboard from "./pages/admin/Dashboard";
 import Contact from "./pages/user/Contact";
 import About from "./pages/user/About";
 import Order from "./pages/user/Order";

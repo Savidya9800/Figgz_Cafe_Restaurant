@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { FloatingDock } from "../../components/ui/aceternity/floating-dock";
 import Footer from "../../components/Footer";
-import { DatePickerDemo } from "../../components/ui/DatePicker";
+import { DatePickerDemo } from "../../components/DatePicker"; // Adjusted import path
 import {
   AlertDialog,
   AlertDialogTrigger,
