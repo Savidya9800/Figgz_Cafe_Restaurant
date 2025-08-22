@@ -119,6 +119,7 @@ const BookingList = () => {
                       <TableCell sx={{ fontWeight: 600, color: '#374151' }}>Date</TableCell>
                       <TableCell sx={{ fontWeight: 600, color: '#374151' }}>Time</TableCell>
                       <TableCell sx={{ fontWeight: 600, color: '#374151' }}>Persons</TableCell>
+                      <TableCell sx={{ fontWeight: 600, color: '#374151' }}>Location</TableCell>
                       <TableCell sx={{ fontWeight: 600, color: '#374151' }}>Actions</TableCell>
                     </TableRow>
                   </TableHead>
@@ -167,6 +168,9 @@ const BookingList = () => {
                             <Typography variant="body2" sx={{ color: '#374151' }}>{r.persons}</Typography>
                           </TableCell>
                           <TableCell>
+                            <Typography variant="body2" sx={{ color: '#374151' }}>{r.location || '-'}</Typography>
+                          </TableCell>
+                          <TableCell>
                             <Box sx={{ display: 'flex', gap: 1 }}>
                               <IconButton size="small" sx={{ color: '#3b82f6' }}>
                                 <Visibility fontSize="small" />
@@ -185,17 +189,21 @@ const BookingList = () => {
                             {openRows[r._id] && (
                               <Box sx={{ px: 5, py: 2, backgroundColor: '#f8fafc', borderTop: '1px solid #e2e8f0' }}>
                                 <Grid container spacing={2}>
-                                  <Grid item xs={12} md={4}>
+                                  <Grid item xs={12} md={3}>
                                     <Typography variant="subtitle2" sx={{ color: '#64748b', fontWeight: 600 }}>Note</Typography>
                                     <Typography variant="body2" sx={{ color: '#374151' }}>{r.note || '-'}</Typography>
                                   </Grid>
-                                  <Grid item xs={12} md={4}>
+                                  <Grid item xs={12} md={3}>
                                     <Typography variant="subtitle2" sx={{ color: '#64748b', fontWeight: 600 }}>Created Date</Typography>
                                     <Typography variant="body2" sx={{ color: '#374151' }}>{formatCreatedDate(r.createdAt)}</Typography>
                                   </Grid>
-                                  <Grid item xs={12} md={4}>
+                                  <Grid item xs={12} md={3}>
                                     <Typography variant="subtitle2" sx={{ color: '#64748b', fontWeight: 600 }}>Created Time</Typography>
                                     <Typography variant="body2" sx={{ color: '#374151' }}>{formatCreatedTime(r.createdAt)}</Typography>
+                                  </Grid>
+                                  <Grid item xs={12} md={3}>
+                                    <Typography variant="subtitle2" sx={{ color: '#64748b', fontWeight: 600 }}>Location</Typography>
+                                    <Typography variant="body2" sx={{ color: '#374151' }}>{r.location || '-'}</Typography>
                                   </Grid>
                                 </Grid>
                               </Box>

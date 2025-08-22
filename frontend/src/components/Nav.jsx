@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth, LoginModalContext } from "../contexts/AuthContext";
 import LoginModal from "./LoginModal";
 import {
   AlertDialog,
@@ -37,6 +37,12 @@ function Navigation() {
   const [scrollY, setScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const { setOpenLoginModalCallback } = React.useContext(LoginModalContext);
+  React.useEffect(() => {
+    if (setOpenLoginModalCallback) {
+      setOpenLoginModalCallback(() => () => setIsLoginModalOpen(true));
+    }
+  }, [setOpenLoginModalCallback]);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [showSignOutSuccess, setShowSignOutSuccess] = useState(false);
   const [showSignInSuccess, setShowSignInSuccess] = useState(false);

@@ -14,8 +14,8 @@ import MyOrders from "./pages/user/MyOrders";
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
+    <Router>
+      <AuthProvider>
         <div className="min-h-screen bg-white">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -31,8 +31,8 @@ function App() {
             {/* Add other routes as needed */}
           </Routes>
         </div>
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 

@@ -19,6 +19,7 @@ function Home() {
     date: "",
     time: "",
     persons: "",
+    location: "",
     note: "",
   });
   const [reservationErrors, setReservationErrors] = useState({
@@ -28,8 +29,11 @@ function Home() {
     date: "",
     time: "",
     persons: "",
+    location: "",
     note: "",
   });
+  // Validate location
+  const validateLocation = (location) => (!location ? "Select a location" : "");
 
   // Autofill if user is logged in
   useEffect(() => {
@@ -62,7 +66,8 @@ function Home() {
     return "";
   };
   const validateDate = (date) => {
-    if (!date || typeof date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return "Date is required";
+    if (!date || typeof date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(date))
+      return "Date is required";
     return "";
   };
   const validateTime = (time) => (!time ? "Time is required" : "");
@@ -83,8 +88,8 @@ function Home() {
     if (name === "date") {
       if (value instanceof Date && !isNaN(value)) {
         const year = value.getFullYear();
-        const month = String(value.getMonth() + 1).padStart(2, '0');
-        const day = String(value.getDate()).padStart(2, '0');
+        const month = String(value.getMonth() + 1).padStart(2, "0");
+        const day = String(value.getDate()).padStart(2, "0");
         newValue = `${year}-${month}-${day}`;
       }
     }
@@ -94,9 +99,10 @@ function Home() {
     if (name === "name") errorMsg = validateName(newValue);
     if (name === "email") errorMsg = validateEmail(newValue);
     if (name === "phone") errorMsg = validatePhone(newValue);
-  if (name === "date") errorMsg = validateDate(newValue);
+    if (name === "date") errorMsg = validateDate(newValue);
     if (name === "time") errorMsg = validateTime(newValue);
     if (name === "persons") errorMsg = validatePersons(newValue);
+    if (name === "location") errorMsg = validateLocation(newValue);
     if (name === "note") errorMsg = validateNote(newValue);
     setReservationErrors((prev) => ({ ...prev, [name]: errorMsg }));
   };
@@ -111,6 +117,7 @@ function Home() {
       date: validateDate(reservation.date),
       time: validateTime(reservation.time),
       persons: validatePersons(reservation.persons),
+      location: validateLocation(reservation.location),
       note: validateNote(reservation.note),
     };
     setReservationErrors(errors);
@@ -129,11 +136,13 @@ function Home() {
         date: "",
         time: "",
         persons: "",
+        location: "",
         note: "",
       });
     } catch (err) {
       alert(
-        err.response?.data?.error || "Failed to submit reservation. Please try again."
+        err.response?.data?.error ||
+          "Failed to submit reservation. Please try again."
       );
     }
   };
@@ -1728,8 +1737,8 @@ function Home() {
 
               <div className="relative z-10">
                 <form className="space-y-6" onSubmit={handleReservationSubmit}>
-                  {/* First Row - Name and Persons */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* First Row - Name, Persons, and Location */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="space-y-2">
                       <label className="text-sm font-semibold text-figgz-secondary flex items-center gap-2">
                         Name <span className="text-figgz-primary">*</span>
@@ -1763,16 +1772,38 @@ function Home() {
                         value={reservation.persons}
                         onChange={handleReservationChange}
                         options={[
-                          { value: '', label: 'Select persons' },
-                          { value: '1', label: '1 Person' },
-                          { value: '2', label: '2 Persons' },
-                          { value: '3', label: '3 Persons' },
-                          { value: '4', label: '4 Persons' },
-                          { value: '5', label: '5+ Persons' },
+                          // { value: '', label: 'Select persons' },
+                          { value: "1", label: "1 Person" },
+                          { value: "2", label: "2 Persons" },
+                          { value: "3", label: "3 Persons" },
+                          { value: "4", label: "4 Persons" },
+                          { value: "5", label: "5+ Persons" },
                         ]}
                         placeholder="Select persons"
                         error={reservationErrors.persons}
                       />
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-semibold text-figgz-secondary flex items-center gap-2">
+                        Location <span className="text-figgz-primary">*</span>
+                      </label>
+                      <Select
+                        name="location"
+                        value={reservation.location}
+                        onChange={handleReservationChange}
+                        options={[
+                          { value: "Bowen Hills", label: "Bowen Hills" },
+                          { value: "Taringa", label: "Taringa" },
+                        ]}
+                        placeholder="Select location"
+                        error={reservationErrors.location}
+                      />
+                      {reservationErrors.location && (
+                        <p className="text-xs text-red-600 mt-1">
+                          {reservationErrors.location}
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -1783,13 +1814,22 @@ function Home() {
                         Date <span className="text-figgz-primary">*</span>
                       </label>
                       <DatePickerDemo
-                        value={reservation.date ? new Date(reservation.date) : undefined}
+                        value={
+                          reservation.date
+                            ? new Date(reservation.date)
+                            : undefined
+                        }
                         onChange={(dateObj) => {
                           let formatted = "";
                           if (dateObj instanceof Date && !isNaN(dateObj)) {
                             const year = dateObj.getFullYear();
-                            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-                            const day = String(dateObj.getDate()).padStart(2, '0');
+                            const month = String(
+                              dateObj.getMonth() + 1
+                            ).padStart(2, "0");
+                            const day = String(dateObj.getDate()).padStart(
+                              2,
+                              "0"
+                            );
                             formatted = `${year}-${month}-${day}`;
                           }
                           handleReservationChange({
@@ -1817,22 +1857,22 @@ function Home() {
                         value={reservation.time}
                         onChange={handleReservationChange}
                         options={[
-                          { value: '', label: 'Select time' },
-                          { value: '11:00', label: '11:00 AM' },
-                          { value: '11:30', label: '11:30 AM' },
-                          { value: '12:00', label: '12:00 PM' },
-                          { value: '12:30', label: '12:30 PM' },
-                          { value: '13:00', label: '1:00 PM' },
-                          { value: '13:30', label: '1:30 PM' },
-                          { value: '14:00', label: '2:00 PM' },
-                          { value: '14:30', label: '2:30 PM' },
-                          { value: '18:00', label: '6:00 PM' },
-                          { value: '18:30', label: '6:30 PM' },
-                          { value: '19:00', label: '7:00 PM' },
-                          { value: '19:30', label: '7:30 PM' },
-                          { value: '20:00', label: '8:00 PM' },
-                          { value: '20:30', label: '8:30 PM' },
-                          { value: '21:00', label: '9:00 PM' },
+                          { value: "", label: "Select time" },
+                          { value: "11:00", label: "11:00 AM" },
+                          { value: "11:30", label: "11:30 AM" },
+                          { value: "12:00", label: "12:00 PM" },
+                          { value: "12:30", label: "12:30 PM" },
+                          { value: "13:00", label: "1:00 PM" },
+                          { value: "13:30", label: "1:30 PM" },
+                          { value: "14:00", label: "2:00 PM" },
+                          { value: "14:30", label: "2:30 PM" },
+                          { value: "18:00", label: "6:00 PM" },
+                          { value: "18:30", label: "6:30 PM" },
+                          { value: "19:00", label: "7:00 PM" },
+                          { value: "19:30", label: "7:30 PM" },
+                          { value: "20:00", label: "8:00 PM" },
+                          { value: "20:30", label: "8:30 PM" },
+                          { value: "21:00", label: "9:00 PM" },
                         ]}
                         placeholder="Select time"
                         error={reservationErrors.time}
@@ -1912,11 +1952,24 @@ function Home() {
                       // not required
                     />
                     <div className="flex justify-between text-xs mt-1">
-                      <span className={reservation.note.trim().split(/\s+/).filter(Boolean).length > 50 ? "text-red-600" : "text-gray-400"}>
-                        {reservation.note.trim().split(/\s+/).filter(Boolean).length} / 50 words
+                      <span
+                        className={
+                          reservation.note.trim().split(/\s+/).filter(Boolean)
+                            .length > 50
+                            ? "text-red-600"
+                            : "text-gray-400"
+                        }
+                      >
+                        {
+                          reservation.note.trim().split(/\s+/).filter(Boolean)
+                            .length
+                        }{" "}
+                        / 50 words
                       </span>
                       {reservationErrors.note && (
-                        <span className="text-red-600">{reservationErrors.note}</span>
+                        <span className="text-red-600">
+                          {reservationErrors.note}
+                        </span>
                       )}
                     </div>
                   </div>

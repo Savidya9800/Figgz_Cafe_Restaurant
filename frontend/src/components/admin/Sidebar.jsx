@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Select as ShadcnSelect } from '../ui/shadcn/Select';
 import {
   Drawer,
   Box,
@@ -27,7 +28,12 @@ import {
   NotificationsNoneOutlined
 } from '@mui/icons-material';
 
+
 const drawerWidth = 260;
+const shopOptions = [
+  { label: 'Bowen Hills', value: 'Bowen Hills' },
+  { label: 'Taringa', value: 'Taringa' },
+];
 
 const sidebarItems = [
   { text: 'Dashboard', icon: <Dashboard />, section: 'Dashboard' },
@@ -53,8 +59,41 @@ const bottomSidebarItems = [
   },
 ];
 
-const AdminSidebar = ({ selectedSection, setSelectedSection, mobileOpen, handleDrawerToggle }) => (
-  <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
+const AdminSidebar = ({ selectedSection, setSelectedSection, mobileOpen, handleDrawerToggle }) => {
+  const [selectedShop, setSelectedShop] = useState(shopOptions[0].value);
+
+
+  // Creative location display with custom dropdown
+  const locationDisplay = (
+    <Box sx={{
+      display: 'flex',
+      alignItems: 'center',
+      mb: 1,
+      gap: 1.5,
+      px: 1,
+    }}>
+      <Box sx={{
+        width: 10,
+        height: 40,
+        borderRadius: 2,
+        background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
+        mr: 1,
+        boxShadow: '0 2px 8px rgba(59,130,246,0.15)',
+      }} />
+      <Box sx={{ flex: 1 }}>
+        <ShadcnSelect
+          value={selectedShop}
+          onChange={e => setSelectedShop(e.target.value)}
+          options={shopOptions}
+          placeholder="Select Shop..."
+          name="shop"
+        />
+      </Box>
+    </Box>
+  );
+
+  return (
+    <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
     {/* Mobile Drawer */}
     <Drawer
       variant="temporary"
@@ -71,34 +110,8 @@ const AdminSidebar = ({ selectedSection, setSelectedSection, mobileOpen, handleD
         },
       }}
     >
-      {/* Logo Section */}
       <Box sx={{ p: 3, borderBottom: '1px solid #e2e8f0' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-          <Box
-            sx={{
-              width: 40,
-              height: 40,
-              borderRadius: 2,
-              background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              mr: 2,
-            }}
-          >
-            <Typography variant="h6" sx={{ color: 'white', fontWeight: 'bold' }}>
-              S
-            </Typography>
-          </Box>
-          <Box>
-            <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#1e293b', lineHeight: 1 }}>
-              Sedap.
-            </Typography>
-            <Typography variant="caption" sx={{ color: '#64748b', fontSize: '0.75rem' }}>
-              Modern Admin Dashboard
-            </Typography>
-          </Box>
-        </Box>
+        {locationDisplay}
       </Box>
       {/* Navigation Menu */}
       <Box sx={{ flex: 1, overflow: 'auto', py: 2 }}>
@@ -231,34 +244,8 @@ const AdminSidebar = ({ selectedSection, setSelectedSection, mobileOpen, handleD
       }}
       open
     >
-      {/* Logo Section */}
       <Box sx={{ p: 3, borderBottom: '1px solid #e2e8f0' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-          <Box
-            sx={{
-              width: 40,
-              height: 40,
-              borderRadius: 2,
-              background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              mr: 2,
-            }}
-          >
-            <Typography variant="h6" sx={{ color: 'white', fontWeight: 'bold' }}>
-              S
-            </Typography>
-          </Box>
-          <Box>
-            <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#1e293b', lineHeight: 1 }}>
-              Sedap.
-            </Typography>
-            <Typography variant="caption" sx={{ color: '#64748b', fontSize: '0.75rem' }}>
-              Modern Admin Dashboard
-            </Typography>
-          </Box>
-        </Box>
+        {locationDisplay}
       </Box>
       {/* Navigation Menu */}
       <Box sx={{ flex: 1, overflow: 'auto', py: 2 }}>
@@ -371,6 +358,7 @@ const AdminSidebar = ({ selectedSection, setSelectedSection, mobileOpen, handleD
       </Box>
     </Drawer>
   </Box>
-);
+  );
+};
 
 export default AdminSidebar;
