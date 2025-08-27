@@ -48,8 +48,13 @@ const GoogleLoginButton = ({ onSuccess, onError, className = '' }) => {
                 onError?.(result.error);
             }
         } catch (error) {
-            console.error('Login error:', error);
-            onError?.(error.message);
+            // FedCM: Handle AbortError as a normal user action, not a real error
+            if (error?.name === 'AbortError') {
+                console.log('Google sign-in was aborted by the user or browser (FedCM AbortError).');
+            } else {
+                console.error('Login error:', error);
+                onError?.(error.message);
+            }
         }
     };
 
@@ -62,15 +67,15 @@ const GoogleLoginButton = ({ onSuccess, onError, className = '' }) => {
                     return;
                 }
                 window.google.accounts.id.prompt((notification) => {
-                    // Modernized: Use recommended FedCM-safe checks
+                    // FedCM: Use getMomentType for prompt status
                     if (notification.getMomentType) {
                         const momentType = notification.getMomentType();
                         if (momentType === 'skipped') {
-                            console.log('Google sign-in prompt was skipped');
+                            console.log('Google sign-in prompt was skipped (FedCM)');
                         } else if (momentType === 'dismissed') {
-                            console.log('Google sign-in prompt was dismissed');
+                            console.log('Google sign-in prompt was dismissed (FedCM)');
                         } else if (momentType === 'displayed') {
-                            console.log('Google sign-in prompt was displayed');
+                            console.log('Google sign-in prompt was displayed (FedCM)');
                         }
                     } else {
                         // Fallback for older API
@@ -86,8 +91,13 @@ const GoogleLoginButton = ({ onSuccess, onError, className = '' }) => {
                 onError?.('Google services are not available. Please try again.');
             }
         } catch (error) {
-            console.error('Google login error:', error);
-            onError?.(error.message);
+            // FedCM: Handle AbortError as a normal user action
+            if (error?.name === 'AbortError') {
+                console.log('Google sign-in was aborted by the user or browser (FedCM AbortError).');
+            } else {
+                console.error('Google login error:', error);
+                onError?.(error.message);
+            }
         }
     };
 
