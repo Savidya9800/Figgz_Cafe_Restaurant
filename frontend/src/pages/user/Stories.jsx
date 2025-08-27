@@ -210,13 +210,11 @@ function Stories() {
               <span className="relative z-10">Learn More</span>
               <motion.div
                 className="absolute inset-0 rounded-full bg-gradient-to-r from-white/20 to-transparent"
-                animate={{
-                  rotate: [0, 360],
-                }}
+                initial={{ opacity: 1, rotate: 0 }}
+                animate={{ opacity: 0, rotate: 360 }}
                 transition={{
                   duration: 3,
-                  repeat: Infinity,
-                  ease: "linear",
+                  ease: "linear"
                 }}
               />
               <svg

@@ -1644,19 +1644,20 @@ function Home() {
             viewport={{ once: true }}
             className="text-center mt-16"
           >
-            <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
+            <a
+              href="https://www.google.com/maps/place/Figgz/@-27.4948185,152.9838483,17z/data=!3m1!4b1!4m6!3m5!1s0x6b9151006eabbd07:0xb55b450e5ad778a!8m2!3d-27.4948185!4d152.9864232!16s%2Fg%2F11y7cldsrj?entry=ttu&g_ep=EgoyMDI1MDgyNC4wIKXMDSoASAFQAw%3D%3D"
               className="bg-figgz-primary text-white px-12 py-4 rounded-full font-semibold text-lg shadow-2xl hover:shadow-figgz-primary/25 transition-all duration-300 inline-flex items-center gap-3"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: 'inline-flex', alignItems: 'center' }}
             >
               Read More Reviews
-              <motion.svg
+              <svg
                 className="w-5 h-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                whileHover={{ x: 5 }}
-                transition={{ duration: 0.3 }}
+                style={{ transition: 'transform 0.3s' }}
               >
                 <path
                   strokeLinecap="round"
@@ -1664,8 +1665,8 @@ function Home() {
                   strokeWidth={2}
                   d="M17 8l4 4m0 0l-4 4m4-4H3"
                 />
-              </motion.svg>
-            </motion.button>
+              </svg>
+            </a>
           </motion.div>
         </div>
       </section>
